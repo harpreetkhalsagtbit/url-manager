@@ -1,2 +1,3 @@
 export const CHECK_LOGIN_STATUS = 'CHECK_LOGIN_STATUS';
 export const AUTH_FAILED = 'AUTH_FAILED';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';

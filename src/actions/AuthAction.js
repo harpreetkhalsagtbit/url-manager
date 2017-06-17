@@ -10,6 +10,11 @@ export function getAuthStatus() {
 	return {type:types.AUTH_FAILED, "isLoggedIn":isLoggedIn};
 }
 
+export function allowLogInAccess(status) {
+	var isLoggedIn = status;
+	return {type:types.AUTH_SUCCESS, "isLoggedIn":isLoggedIn};
+}
+
 // export function checkAuthStatus() {
 	// return dispatch => {
 	// 	return AuthorApi.getAllAuthors().then(authors => {
@@ -23,5 +28,12 @@ export function getAuthStatus() {
 export const checkAuthStatus = () => {
 	return dispatch => {
 		dispatch(getAuthStatus())
+	}
+}
+
+export const forceLogIn = () => {
+	console.log("here")
+	return dispatch => {
+		dispatch(allowLogInAccess(true))
 	}
 }
