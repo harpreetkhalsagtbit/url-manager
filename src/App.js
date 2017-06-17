@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
-import { history } from './store'
 import logo from './logo.svg';
-import { Route } from 'react-router-dom'
-import SignIn from './AuthComponents/SignIn';
+import { bindActionCreators } from 'redux'
+import * as authActions from './actions/AuthAction';
+import {connect} from 'react-redux';
+
 import './App.css';
 
 class App extends Component {
 
     constructor(props) {
+        console.log(props)
         super(props)
-        this.state = {
-            isAuthenticated : false
-        }
     }
     componentWillMount() {
-        var token = localStorage.getItem("token")
-        if(!token) {
-            console.log("redirect to login")
-            history.push("sign-in")
+        if(this.props.auth && !this.props.auth.isLoggedIn && this.props.history) {
+            this.props.history.push("/sign-in")
         }
     }
 
@@ -32,7 +29,6 @@ class App extends Component {
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
                 <main>
-                  <Route exact path="/sign-in" component={SignIn} />
                 </main>
 
             </div>
@@ -40,4 +36,50 @@ class App extends Component {
     }
 }
 
-export default App;
+// const mapStateToProps = state => ({
+//     isLoggedIn: state.getLogInStatus.isLoggedIn,
+// })
+
+// const mapDispatchToProps = dispatch => bindActionCreators({
+//     getLogInStatus,
+//     redirectToLogin
+//     // changePage: () => push('/about-us')
+// }, dispatch)
+
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(App)
+
+var count = 0;
+function mapStateToProps(state, ownProps) {
+    console.log(count++, "mapStateToProps", state)
+    // const courseId = ownProps.params.id; //from the path '/course/:id'
+    // let course = {id:'', watchHref:'', title:'', authorId:'', length:'', category:''};
+    // if(courseId && state.courses && state.courses.length) {
+    //     course = getCourseById(state.courses, courseId);
+    // }
+    // let authors = state.authors || [];
+
+    // const authorsFormattedForDropdown = authors.map(author => {
+    //     return {
+    //         value:author.id,
+    //         text: author.firstName + ' ' + author.lastName
+    //     };
+    // });
+    return {
+        auth:state.auth
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    console.log("mapDispatchToProps")
+    return {
+        action: bindActionCreators(authActions, dispatch)
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// export default App;
