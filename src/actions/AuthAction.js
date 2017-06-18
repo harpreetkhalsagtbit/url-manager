@@ -47,10 +47,49 @@ export function allowLogInAccess(status) {
 
 export const checkAuthStatus = () => {
 	return dispatch => {
-		return setTimeout(() => {
-			console.log("here status after 3000")
-			dispatch(getAuthStatus())
-		}, 3000)
+		var token = localStorage.getItem("token")
+		var promise = new Promise(function(resolve, reject) {
+			$.ajax({
+				type: "POST",
+				"async": true,
+				"crossDomain": true,
+				"url": "http://localhost:8080/api/verify-token",
+				"method": "POST",
+				"headers": {
+					"content-type": "application/x-www-form-urlencoded",
+					// "cache-control": "no-cache",
+				},
+				"data": {
+					"token": token,
+				},
+				success: function (data, status, response) {
+					console.log("token success", data, response)
+					resolve({
+						statusCode:response.status,
+						message:response.statusText,
+						token:data.token
+					})
+				},
+				error: function (request, status, error) {
+					console.log("error", request, error)
+			        reject({
+			        	errorCode:request.status,
+			        	error:error
+			        })
+			    }
+			})
+		})
+
+		promise.then(function(response) {
+			if(response.statusCode === 200) {
+				return dispatch(allowLogInAccess(true))
+			}
+		})
+		.catch(function(response) {
+			if(response.errorCode === 403) {
+				return dispatch(authFailed(response))
+			}
+		})
 	}
 }
 
