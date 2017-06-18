@@ -6,12 +6,17 @@ export function getAuthStatus() {
 	var isLoggedIn = false;
 	if (token) {
 		isLoggedIn = true;
+		return {
+			type: types.AUTH_SUCCESS,
+			"isLoggedIn": isLoggedIn
+		};
+	} else {
+		return {
+			type: types.AUTH_FAILED,
+			"isLoggedIn": isLoggedIn
+		};
 	}
 
-	return {
-		type: types.AUTH_FAILED,
-		"isLoggedIn": isLoggedIn
-	};
 }
 
 export function authFailed(response) {
@@ -67,11 +72,11 @@ export const verifyLogIn = () => {
 					"email": "harpreet",
 					"password": "password"
 				},
-				success: function (request, status, response) {
-					console.log(arguments)
+				success: function (data, status, response) {
 					resolve({
 						statusCode:response.status,
-						message:response.statusText
+						message:response.statusText,
+						token:data.token
 					})
 				},
 				error: function (request, status, error) {
@@ -84,13 +89,12 @@ export const verifyLogIn = () => {
 		})
 
 		return promise.then(function(response) {
-			console.log(arguments)
 			if(response.statusCode === 200) {
+				localStorage.setItem("token", response.token)
 				return dispatch(allowLogInAccess(true))
 			}
 		})
 		.catch(function(response) {
-			console.log("err catch promise", response)
 			if(response.errorCode === 400) {
 				return dispatch(authFailed(response))
 			}

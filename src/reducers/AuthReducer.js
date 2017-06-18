@@ -16,7 +16,6 @@ export default function authReducer(state = initialState, action) {
 			}
 
 		case types.AUTH_SUCCESS:
-			// console.log("action", action)
 			return {
 				isLoggedIn: action.isLoggedIn
 			}

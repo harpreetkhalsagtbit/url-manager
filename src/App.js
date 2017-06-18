@@ -9,8 +9,8 @@ import './App.css';
 class App extends Component {
 
     componentWillReceiveProps(nextProps) {
-        if(this.props.auth && !this.props.auth.isLoggedIn && this.props.history) {
-            this.props.history.push("/sign-in")
+        if(nextProps.auth && !nextProps.auth.isLoggedIn && nextProps.history) {
+            nextProps.history.push("/sign-in")
         }
     }
 
