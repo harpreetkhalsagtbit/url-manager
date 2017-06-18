@@ -7,15 +7,16 @@ const initialState = {
 }
 
 export default function authReducer(state = initialState, action) {
-	console.log(action.type)
+	// console.log(action.type)
 	switch (action.type) {
 		case types.AUTH_FAILED:
 			return {
-				isLoggedIn: action.isLoggedIn
+				isLoggedIn: action.isLoggedIn,
+				response: action.response
 			}
 
 		case types.AUTH_SUCCESS:
-			console.log("action", action)
+			// console.log("action", action)
 			return {
 				isLoggedIn: action.isLoggedIn
 			}
