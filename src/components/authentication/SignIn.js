@@ -79,7 +79,7 @@ class SignIn extends Component {
     render() {
         // console.log("render", status, this)
         var showError = <h1>No Error</h1>
-        if(this.state.errors.errorCode == 400) {
+        if(this.state.errors.errorCode === 400) {
             showError = <h1>Error</h1>
         }
         console.log(this.state)

@@ -1,5 +1,6 @@
 import React from 'react';
 import TextInput from '../common/TextInput';
+import PropTypes from 'prop-types'; // ES6
 
 const CourseForm = ({logInDetails, onSave, onChange, loading, errors}) => {
 	return (
@@ -31,10 +32,10 @@ const CourseForm = ({logInDetails, onSave, onChange, loading, errors}) => {
 
 CourseForm.propTypes = {
 	// course: React.PropTypes.object.isRequired,
-	onSave: React.PropTypes.func,
-	onChange: React.PropTypes.func,
-	loading: React.PropTypes.bool,
-	errors: React.PropTypes.object
+	onSave: PropTypes.func,
+	onChange: PropTypes.func,
+	loading: PropTypes.bool,
+	errors: PropTypes.object
 };
 
 export default CourseForm;
