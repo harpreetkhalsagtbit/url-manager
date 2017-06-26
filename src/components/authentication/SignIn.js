@@ -17,7 +17,6 @@ class SignIn extends Component {
         };
 
         // console.log("constructor", this)
-	    this.verifyLogInCredential = this.verifyLogInCredential.bind(this);
         this.updateLogInFormState = this.updateLogInFormState.bind(this);
         this.submitLogInForm = this.submitLogInForm.bind(this);
     }
@@ -33,10 +32,9 @@ class SignIn extends Component {
         console.log("componentWillReceiveProps", nextProps)
         if(nextProps.auth && nextProps.auth.isLoggedIn) {
             this.setState({auth: Object.assign({}, nextProps.auth)});
-            console.log("state set", {errors: Object.assign({}, nextProps.response)})
+            // console.log("state set", {errors: Object.assign({}, nextProps.response)})
             this.props.history.push("/")
         } else if(nextProps.auth && !nextProps.auth.isLoggedIn) {
-            console.log("else if")
             this.setState({errors: Object.assign({}, nextProps.auth.response)});
         }
     }
@@ -51,18 +49,14 @@ class SignIn extends Component {
     submitLogInForm(event) {
         event.preventDefault();
         console.log(this.state.logInDetails)
-        this.verifyLogInCredential()
+		this.props.action.verifyLogIn(this.state.logInDetails)
         // this.props.action.saveCourse(this.state.course);
         // this.context.router.push('/courses');
         // this.props.actions.saveCourse(this.state.course);
     }
 
-	verifyLogInCredential() {
-		// console.log("click", this)
-		this.props.action.verifyLogIn(this.state.logInDetails)
-    }
     shouldComponentUpdate(nextProps, nextState) {
-        console.log("shouldComponentUpdate", nextProps, nextState)
+        // console.log("shouldComponentUpdate", nextProps, nextState)
         return true;
         // if(this.props.auth && this.props.auth.isLoggedIn) {
         //     this.setState({course: Object.assign({}, this.props.auth)});
@@ -78,11 +72,10 @@ class SignIn extends Component {
     }
     render() {
         // console.log("render", status, this)
-        var showError = <h1>No Error</h1>
+        var showError = null
         if(this.state.errors.errorCode === 400) {
             showError = <h1>Error</h1>
         }
-        console.log(this.state)
         return (
             <div>
                 <LogInForm
