@@ -93,7 +93,7 @@ export const checkAuthStatus = () => {
 	}
 }
 
-export const verifyLogIn = () => {
+export const verifyLogIn = (logInDetails) => {
 	return dispatch => {
 
 		var promise = new Promise(function(resolve, reject) {
@@ -108,8 +108,8 @@ export const verifyLogIn = () => {
 					// "cache-control": "no-cache",
 				},
 				"data": {
-					"email": "harpreet",
-					"password": "password"
+					"email": logInDetails.username,
+					"password": logInDetails.password
 				},
 				success: function (data, status, response) {
 					resolve({

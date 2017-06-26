@@ -6,7 +6,7 @@ import store, { history } from './store'
 
 
 import { Route } from 'react-router-dom';
-import SignIn from './AuthComponents/SignIn';
+import SignIn from './components/authentication/SignIn';
 import {checkAuthStatus} from './actions/AuthAction';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
