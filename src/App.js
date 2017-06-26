@@ -14,6 +14,12 @@ class App extends Component {
         if(nextProps.auth && !nextProps.auth.isLoggedIn && nextProps.history) {
             nextProps.history.push("/sign-in")
         }
+        this.logoutHandler = this.logoutHandler.bind(this);
+    }
+
+    logoutHandler () {
+        localStorage.setItem("token","")
+        this.props.history.push("/sign-in")
     }
 
     render() {
@@ -27,8 +33,8 @@ class App extends Component {
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
                 <main>
-                    <Button>
-                        Click Here
+                    <Button onClick={this.logoutHandler}>
+                        Logout
                     </Button>
                 </main>
 
