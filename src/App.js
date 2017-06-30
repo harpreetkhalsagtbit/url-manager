@@ -1,28 +1,71 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import { bindActionCreators } from 'redux'
-import * as authActions from './actions/AuthAction';
+import * as authActionCreator from './actions/AuthAction';
+import * as urlMetadataActionCreator from './actions/UrlMetadataAction';
 import {connect} from 'react-redux';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Button } from 'semantic-ui-react'
+import ListItem from './components/common/ListItem'
+// import store from './store'
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            auth:Object.assign({}, this.props.auth),
+            urlMetadata:[],
+        };
+        this.logoutHandler = this.logoutHandler.bind(this);
+    }
+    componentDidMount(a,b,c) {
+        // console.log("componentDidMount", this.props)
+        // this.props.authAction.checkAuthStatus()
+        // this.props.getAuth()
+    }
 
     componentWillReceiveProps(nextProps) {
+        // console.log(nextProps)
         if(nextProps.auth && !nextProps.auth.isLoggedIn && nextProps.history) {
             nextProps.history.push("/sign-in")
+        } else {
+            // this should have done with props
+            // :(
+            // I tried so many methods, but finally I have to
+            // do it in this way using promises
+            // and manually setting state
+            this.props.urlMetadataAction.loadURLsWithMeta().then((result) => {
+                this.setState({
+                    urlMetadata: result.data
+                })
+            })
         }
-        this.logoutHandler = this.logoutHandler.bind(this);
     }
 
     logoutHandler () {
         localStorage.setItem("token","")
         this.props.history.push("/sign-in")
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        // console.log("shouldComponentUpdate", nextProps, nextState)
+        return true;
+        // if(this.props.auth && this.props.auth.isLoggedIn) {
+        //     this.setState({course: Object.assign({}, this.props.auth)});
+        //     // this.props.history.push("/")
+        // }
+    }
+    componentDidUpdate() {
+        // console.log("didUpdate", this)
+        // if(this.props.auth && this.props.auth.isLoggedIn) {
+        //     this.setState({course: Object.assign({}, this.props.auth)});
+        //     // this.props.history.push("/")
+        // }
+    }
 
     render() {
+        // console.log()
         return (
             <div className="App">
                 <div className="App-header">
@@ -37,7 +80,7 @@ class App extends Component {
                         Logout
                     </Button>
                 </main>
-
+                <ListItem listdata={this.state.urlMetadata}></ListItem>
             </div>
         );
     }
@@ -60,31 +103,29 @@ class App extends Component {
 
 // var count = 0;
 function mapStateToProps(state, ownProps) {
-    // console.log(count++, "mapStateToProps", state)
-    // const courseId = ownProps.params.id; //from the path '/course/:id'
-    // let course = {id:'', watchHref:'', title:'', authorId:'', length:'', category:''};
-    // if(courseId && state.courses && state.courses.length) {
-    //     course = getCourseById(state.courses, courseId);
+    // console.log(count++, "mapStateToProps", state, JSON.stringify(state.urlMetaData))
+    // var urlMetaData = [];
+    // if(state.urlMetaData) {
+    //     console.log("if")
+    //     urlMetaData = JSON.parse(state.urlMetaData.response.responseText)
+    // } else {
+    //     console.log("else", JSON.stringify(state.urlMetaData))
     // }
-    // let authors = state.authors || [];
-
-    // const authorsFormattedForDropdown = authors.map(author => {
-    //     return {
-    //         value:author.id,
-    //         text: author.firstName + ' ' + author.lastName
-    //     };
-    // });
+    
     return {
         auth:state.auth
+        // urlMetaData:state.urlMetaData
     };
 }
 
 function mapDispatchToProps(dispatch) {
     // console.log("mapDispatchToProps")
     return {
-        action: bindActionCreators(authActions, dispatch)
+        authAction: bindActionCreators(Object.assign({}, authActionCreator), dispatch),
+        urlMetadataAction: bindActionCreators(Object.assign({}, urlMetadataActionCreator), dispatch)
     };
 }
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
