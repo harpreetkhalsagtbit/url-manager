@@ -9,6 +9,7 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Button } from 'semantic-ui-react'
 import ListItem from './components/common/ListItem'
+import Modal from './components/common/Modal'
 // import store from './store'
 
 class App extends Component {
@@ -17,8 +18,13 @@ class App extends Component {
         this.state = {
             auth:Object.assign({}, this.props.auth),
             urlMetadata:[],
+            urlForm: {},
+            open:false
         };
         this.logoutHandler = this.logoutHandler.bind(this);
+        this.onChangeTextInput = this.onChangeTextInput.bind(this);
+        this.saveURLHandler = this.saveURLHandler.bind(this);
+        this.showModal = this.showModal.bind(this);
     }
     componentDidMount(a,b,c) {
         // console.log("componentDidMount", this.props)
@@ -26,8 +32,15 @@ class App extends Component {
         // this.props.getAuth()
     }
 
+    onChangeTextInput(event) {
+        const field = event.target.name;
+        let urlForm = this.state.urlForm;
+        urlForm[field] = event.target.value;
+        return this.setState({urlForm: urlForm});
+    }
+
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps)
+        console.log("nextProps")
         if(nextProps.auth && !nextProps.auth.isLoggedIn && nextProps.history) {
             nextProps.history.push("/sign-in")
         } else {
@@ -47,6 +60,25 @@ class App extends Component {
     logoutHandler () {
         localStorage.setItem("token","")
         this.props.history.push("/sign-in")
+    }
+    saveURLHandler () {
+        this.setState({
+            open:false
+        })
+        this.props.urlMetadataAction.saveURL(this.state.urlForm).then(() => {
+            this.props.urlMetadataAction.loadURLsWithMeta().then((a) => {
+                console.log("a", a)
+                this.setState({
+                    urlMetadata:a.data
+                })
+            });
+        })
+
+    }
+    showModal() {
+        this.setState({
+            open:true
+        })
     }
     shouldComponentUpdate(nextProps, nextState) {
         // console.log("shouldComponentUpdate", nextProps, nextState)
@@ -81,6 +113,8 @@ class App extends Component {
                     </Button>
                 </main>
                 <ListItem listdata={this.state.urlMetadata}></ListItem>
+                <Modal open={this.state.open}header='Add URL' saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm}onChange={this.onChangeTextInput}></Modal>
+                <Button onClick={this.showModal}>Long Modal</Button>
             </div>
         );
     }

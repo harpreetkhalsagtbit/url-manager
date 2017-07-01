@@ -58,3 +58,50 @@ export const loadURLsWithMeta = () => {
 			})
 	}
 }
+
+
+export const saveURL = (urlForm) => {
+	return dispatch => {
+
+		var promise = new Promise(function(resolve, reject) {
+			$.ajax({
+				type: "POST",
+				"async": true,
+				"crossDomain": true,
+				"url": "http://localhost:8080/api/urlScrapper",
+				"method": "POST",
+				"headers": {
+					"content-type": "application/x-www-form-urlencoded",
+					// "cache-control": "no-cache",
+				},
+				"data": {
+					"url": urlForm.url
+				},
+				success: function (data, status, response) {
+					console.log(response)
+					resolve({
+						statusCode:response.status,
+						message:response.statusText
+					})
+				},
+				error: function (request, status, error) {
+			        reject({
+			        	errorCode:request.status,
+			        	error:error
+			        })
+			    }
+			})
+
+		})
+
+		return promise.then(function(data) {
+				return dispatch(loadURLsWithMeta())
+			})
+			.catch(function(response) {
+				// console.log(response)
+				if (response.errorCode === 400) {
+					return "dispatch(authFailed(response))"
+				}
+			})
+	}
+}
