@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types'; // ES6
 import { Item } from 'semantic-ui-react'
 
-const ListItemForURL = ({listdata, label, onChange, placeHolder, value, error}) => {
+const ListItemForURL = ({listdata = [], label, onChange, placeHolder, value, error}) => {
 	let wrapperClass = 'form-group';
 
 	return (
