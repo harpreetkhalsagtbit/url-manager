@@ -102,7 +102,7 @@ class App extends Component {
                 </main>
                 <ListItem listdata={this.state.urlMetadata}></ListItem>
                 <Modal open={this.state.open}header='Add URL' saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm}onChange={this.onChangeTextInput}></Modal>
-                <Button onClick={this.showModal}>Long Modal</Button>
+                <Button onClick={this.showModal}>Add More</Button>
             </div>
         );
     }
@@ -110,7 +110,7 @@ class App extends Component {
 
 var count = 0;
 function mapStateToProps(state, ownProps) {
-    console.log(count++, "mapStateToProps", state)    
+    console.log(count++, "mapStateToProps", state)
     return {
         auth:state.auth,
         urlMetadata:state.urlMetadata
