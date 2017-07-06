@@ -24,7 +24,7 @@ function getAllUrls() {
         var token = localStorage.getItem("token")
         $.ajax({
             type: 'GET',
-            url: "http://localhost:1212/api/urls",
+            url: "http://172.16.1.120:1212/api/urls",
             // beforeSend: function(xhr) {
             // 	xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(unescape(encodeURIComponent("harpreet" + ':' + "password"))))
             // },
@@ -64,7 +64,7 @@ function addURL(urlForm) {
             type: "POST",
             "async": true,
             "crossDomain": true,
-            "url": "http://localhost:1212/api/urlScrapper",
+            "url": "http://172.16.1.120:1212/api/urlScrapper",
             "method": "POST",
             "headers": {
                 "content-type": "application/x-www-form-urlencoded",

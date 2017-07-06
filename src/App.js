@@ -78,19 +78,10 @@ class App extends Component {
         })
     }
     shouldComponentUpdate(nextProps, nextState) {
-        // console.log("shouldComponentUpdate", nextProps, nextState)
         return true;
-        // if(this.props.auth && this.props.auth.isLoggedIn) {
-        //     this.setState({course: Object.assign({}, this.props.auth)});
-        //     // this.props.history.push("/")
-        // }
     }
     componentDidUpdate() {
         console.log("didUpdate")
-        // if(this.props.auth && this.props.auth.isLoggedIn) {
-        //     this.setState({course: Object.assign({}, this.props.auth)});
-        //     // this.props.history.push("/")
-        // }
     }
 
     render() {
@@ -117,32 +108,9 @@ class App extends Component {
     }
 }
 
-// const mapStateToProps = state => ({
-//     isLoggedIn: state.getLogInStatus.isLoggedIn,
-// })
-
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//     getLogInStatus,
-//     redirectToLogin
-//     // changePage: () => push('/about-us')
-// }, dispatch)
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(App)
-
 var count = 0;
 function mapStateToProps(state, ownProps) {
-    console.log(count++, "mapStateToProps", state, JSON.stringify(state.urlMetadata))
-    // var urlMetadata = [];
-    // if(state.urlMetadata) {
-    //     console.log("if")
-    //     urlMetadata = state.urlMetadata
-    // } else {
-    //     console.log("else", JSON.stringify(state.urlMetadata))
-    // }
-    
+    console.log(count++, "mapStateToProps", state)    
     return {
         auth:state.auth,
         urlMetadata:state.urlMetadata
@@ -157,8 +125,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// export default App;
