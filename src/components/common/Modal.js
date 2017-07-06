@@ -14,7 +14,7 @@ const ModalShorthandExample = ({open, urlForm, saveURLHandler, header, content, 
         </Modal.Description>
   		<TextInput
   			name="url"
-  			label="Pastte URL here"
+  			label="Paste URL here"
   			value={urlForm.url}
   			onChange={onChange}
   			error={errors.title}/>
@@ -25,7 +25,7 @@ const ModalShorthandExample = ({open, urlForm, saveURLHandler, header, content, 
         	Cancel
         </Button>
         <Button onClick={saveURLHandler}>
-        	Save {open}
+        	Save
         </Button>
       </Modal.Actions>
     </Modal>

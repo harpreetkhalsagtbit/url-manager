@@ -21,7 +21,6 @@ export function loadAllUrls(data) {
 
 function getAllUrls() {
     return new Promise((resolve, reject) => {
-        var token = localStorage.getItem("token")
         $.ajax({
             type: 'GET',
             url: "http://172.16.1.120:1212/api/urls",
