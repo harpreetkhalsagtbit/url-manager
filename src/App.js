@@ -19,7 +19,8 @@ class App extends Component {
             auth:Object.assign({}, this.props.auth),
             urlMetadata:[],
             urlForm: {},
-            open:false
+            open:false,
+            isRequested:this.props.isRequested || false
         };
         this.logoutHandler = this.logoutHandler.bind(this);
         this.onChangeTextInput = this.onChangeTextInput.bind(this);
@@ -27,9 +28,12 @@ class App extends Component {
         this.showModal = this.showModal.bind(this);
     }
     componentDidMount(a,b,c) {
-        // console.log("componentDidMount", this.props)
+        console.log("componentDidMount")
         // this.props.authAction.checkAuthStatus()
         // this.props.getAuth()
+        if(this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
+            this.setState({urlMetadata:this.props.urlMetadata})
+        }
     }
 
     onChangeTextInput(event) {
@@ -40,19 +44,20 @@ class App extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("nextProps")
+        console.log("nextProps", nextProps)
         if(nextProps.auth && !nextProps.auth.isLoggedIn && nextProps.history) {
             nextProps.history.push("/sign-in")
-        } else {
+        } else if(nextProps.auth && nextProps.auth.isLoggedIn && nextProps.urlMetadata.length) {
+            this.setState({urlMetadata:nextProps.urlMetadata})
+        } else if(nextProps.auth && nextProps.auth.isLoggedIn && !this.state.isRequested){
             // this should have done with props
             // :(
             // I tried so many methods, but finally I have to
             // do it in this way using promises
             // and manually setting state
-            this.props.urlMetadataAction.loadURLsWithMeta().then((result) => {
-                this.setState({
-                    urlMetadata: result.data
-                })
+            this.props.urlMetadataAction.loadURLsWithMeta()
+            this.setState({
+                isRequested:true
             })
         }
     }
@@ -65,15 +70,7 @@ class App extends Component {
         this.setState({
             open:false
         })
-        this.props.urlMetadataAction.saveURL(this.state.urlForm).then(() => {
-            this.props.urlMetadataAction.loadURLsWithMeta().then((a) => {
-                console.log("a", a)
-                this.setState({
-                    urlMetadata:a.data
-                })
-            });
-        })
-
+        this.props.urlMetadataAction.saveURL(this.state.urlForm)
     }
     showModal() {
         this.setState({
@@ -81,19 +78,10 @@ class App extends Component {
         })
     }
     shouldComponentUpdate(nextProps, nextState) {
-        // console.log("shouldComponentUpdate", nextProps, nextState)
         return true;
-        // if(this.props.auth && this.props.auth.isLoggedIn) {
-        //     this.setState({course: Object.assign({}, this.props.auth)});
-        //     // this.props.history.push("/")
-        // }
     }
     componentDidUpdate() {
-        // console.log("didUpdate", this)
-        // if(this.props.auth && this.props.auth.isLoggedIn) {
-        //     this.setState({course: Object.assign({}, this.props.auth)});
-        //     // this.props.history.push("/")
-        // }
+        console.log("didUpdate")
     }
 
     render() {
@@ -102,7 +90,7 @@ class App extends Component {
             <div className="App">
                 <div className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome to React</h2>
+                    <h2>Welcome</h2>
                 </div>
                 <p className="App-intro">
                     To get started, edit <code>src/App.js</code> and save to reload.
@@ -120,35 +108,12 @@ class App extends Component {
     }
 }
 
-// const mapStateToProps = state => ({
-//     isLoggedIn: state.getLogInStatus.isLoggedIn,
-// })
-
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//     getLogInStatus,
-//     redirectToLogin
-//     // changePage: () => push('/about-us')
-// }, dispatch)
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(App)
-
-// var count = 0;
+var count = 0;
 function mapStateToProps(state, ownProps) {
-    // console.log(count++, "mapStateToProps", state, JSON.stringify(state.urlMetaData))
-    // var urlMetaData = [];
-    // if(state.urlMetaData) {
-    //     console.log("if")
-    //     urlMetaData = JSON.parse(state.urlMetaData.response.responseText)
-    // } else {
-    //     console.log("else", JSON.stringify(state.urlMetaData))
-    // }
-    
+    console.log(count++, "mapStateToProps", state)    
     return {
-        auth:state.auth
-        // urlMetaData:state.urlMetaData
+        auth:state.auth,
+        urlMetadata:state.urlMetadata
     };
 }
 
@@ -160,8 +125,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-// export default App;

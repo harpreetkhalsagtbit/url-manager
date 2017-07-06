@@ -1,142 +1,120 @@
 import * as types from './actionTypes';
 import $ from 'jquery';
 
-export function getAuthStatus() {
-	var token = localStorage.getItem("token")
-	var isLoggedIn = false;
-	if (token) {
-		isLoggedIn = true;
-		return {
-			type: types.AUTH_SUCCESS,
-			"isLoggedIn": isLoggedIn
-		};
-	} else {
-		return {
-			type: types.AUTH_FAILED,
-			"isLoggedIn": isLoggedIn
-		};
-	}
-
-}
-
 export function authFailed(response) {
-	return {
-		type: types.AUTH_FAILED,
-		"isLoggedIn": false,
-		"response": response
-	};
+    return {
+        type: types.AUTH_FAILED,
+        "isLoggedIn": false,
+        "response": response
+    };
 }
 
-export function allowLogInAccess(status) {
-	var isLoggedIn = status;
-	return {
-		type: types.AUTH_SUCCESS,
-		"isLoggedIn": isLoggedIn
-	};
+export function authSuccess(status) {
+    var isLoggedIn = status;
+    return {
+        type: types.AUTH_SUCCESS,
+        "isLoggedIn": isLoggedIn
+    };
 }
 
-// export function checkAuthStatus() {
-// return dispatch => {
-// 	return AuthorApi.getAllAuthors().then(authors => {
-// 		dispatch(loadAuthorsSuccess(authors));
-// 	}).catch(error => {
-// 		throw(error);
-// 	});
-// };
-// }
-
-export const checkAuthStatus = () => {
-	return dispatch => {
-		var token = localStorage.getItem("token")
-		var promise = new Promise(function(resolve, reject) {
-			$.ajax({
-				type: "POST",
-				"async": true,
-				"crossDomain": true,
-				"url": "http://localhost:8080/api/verify-token",
-				"method": "POST",
-				"headers": {
-					"content-type": "application/x-www-form-urlencoded",
-					// "cache-control": "no-cache",
-				},
-				"data": {
-					"token": token,
-				},
-				success: function (data, status, response) {
-					console.log("token success", data, response)
-					resolve({
-						statusCode:response.status,
-						message:response.statusText,
-						token:data.token
-					})
-				},
-				error: function (request, status, error) {
-					console.log("error", request, error)
-			        reject({
-			        	errorCode:request.status,
-			        	error:error
-			        })
-			    }
-			})
-		})
-
-		promise.then(function(response) {
-			if(response.statusCode === 200) {
-				return dispatch(allowLogInAccess(true))
-			}
-		})
-		.catch(function(response) {
-			if(response.errorCode === 403) {
-				return dispatch(authFailed(response))
-			}
-		})
-	}
+function isUserAlreadyLoggedIn() {
+    return new Promise((resolve, reject) => {
+        var token = localStorage.getItem("token")
+        if (token) {
+            $.ajax({
+                type: "POST",
+                "async": true,
+                "crossDomain": true,
+                "url": "http://172.16.1.120:1212/api/verify-token",
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    // "cache-control": "no-cache",
+                },
+                "data": {
+                    "token": token,
+                },
+                success: function(data, status, response) {
+                    console.log("token success", data, response)
+                    resolve({
+                        statusCode: response.status,
+                        message: response.statusText,
+                        token: data.token
+                    })
+                },
+                error: function(request, status, error) {
+                    console.log("error", request, error)
+                    reject({
+                        errorCode: request.status,
+                        error: error
+                    })
+                }
+            })
+        } else {
+            reject({
+                errorCode: 403,
+                error: "auth Failed"
+            })
+        }
+    });
 }
 
+export function checkAuthStatus() {
+    return dispatch => {
+        return isUserAlreadyLoggedIn().then(response => {
+            if (response.statusCode === 200) {
+                return dispatch(authSuccess(true))
+            }
+        }).catch(error => {
+            return dispatch(authFailed({}))
+        });
+    };
+}
+
+function authenticateUserCredentials(logInDetails) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "POST",
+            "async": true,
+            "crossDomain": true,
+            "url": "http://172.16.1.120:1212/api/login",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/x-www-form-urlencoded",
+                // "cache-control": "no-cache",
+            },
+            "data": {
+                "email": logInDetails.username,
+                "password": logInDetails.password
+            },
+            success: function(data, status, response) {
+                resolve({
+                    statusCode: response.status,
+                    message: response.statusText,
+                    token: data.token
+                })
+            },
+            error: function(request, status, error) {
+                reject({
+                    errorCode: request.status,
+                    error: error
+                })
+            }
+        })
+    });
+
+}
 export const verifyLogIn = (logInDetails) => {
-	return dispatch => {
-
-		var promise = new Promise(function(resolve, reject) {
-			$.ajax({
-				type: "POST",
-				"async": true,
-				"crossDomain": true,
-				"url": "http://localhost:8080/api/login",
-				"method": "POST",
-				"headers": {
-					"content-type": "application/x-www-form-urlencoded",
-					// "cache-control": "no-cache",
-				},
-				"data": {
-					"email": logInDetails.username,
-					"password": logInDetails.password
-				},
-				success: function (data, status, response) {
-					resolve({
-						statusCode:response.status,
-						message:response.statusText,
-						token:data.token
-					})
-				},
-				error: function (request, status, error) {
-			        reject({
-			        	errorCode:request.status,
-			        	error:error
-			        })
-			    }
-			})
-		})
-
-		return promise.then(function(response) {
-			if(response.statusCode === 200) {
-				localStorage.setItem("token", response.token)
-				return dispatch(allowLogInAccess(true))
-			}
-		})
-		.catch(function(response) {
-			if(response.errorCode === 400) {
-				return dispatch(authFailed(response))
-			}
-		})
-	}
+    return dispatch => {
+        return authenticateUserCredentials(logInDetails).then(response => {
+            if (response.statusCode === 200) {
+                localStorage.setItem("token", response.token)
+                return dispatch(authSuccess(true))
+            }
+        }).catch(error => {
+            if (error.errorCode === 400) {
+                return dispatch(authFailed(error))
+            }
+        });
+    };
 }
