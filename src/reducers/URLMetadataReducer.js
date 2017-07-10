@@ -2,14 +2,31 @@ import * as types from '../actions/actionTypes';
 // import initialState from './initialState';
 
 const initialState = {
-	data: []
+	urlList: []
 }
 
-export default function urlMetadataReducer(state = initialState, action) {
-	// console.log(action.type)
+export default function urlMetadataReducer(state = initialState.urlList, action) {
+	// console.log(action, types)
 	switch (action.type) {
 		case types.LOAD_URL_SUCCESS:
-			return action.data;
+			return action.urlList;
+
+		case types.ADD_URL_SUCCESS:
+			return [
+				...state,
+				Object.assign({}, action.url)
+			];
+
+		case types.DELETE_URL_SUCCESS:
+			return state.filter(url => {
+				return (url._id !== action.id)
+			})
+
+		case types.UPDATE_URL_SUCCESS:
+			return [
+				...state.filter(url => url.id !== action.url.id),
+				Object.assign({}, action.url)
+			];
 
 		default:
 			return state;

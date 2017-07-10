@@ -1,3 +1,4 @@
+import * as config from '../config';
 import * as types from './actionTypes';
 import $ from 'jquery';
 
@@ -25,7 +26,7 @@ function isUserAlreadyLoggedIn() {
                 type: "POST",
                 "async": true,
                 "crossDomain": true,
-                "url": "http://172.16.1.120:1212/api/verify-token",
+                "url": config.HOST + ":" + config.PORT + "/api/verify-token",
                 "method": "POST",
                 "headers": {
                     "content-type": "application/x-www-form-urlencoded",
@@ -77,7 +78,7 @@ function authenticateUserCredentials(logInDetails) {
             type: "POST",
             "async": true,
             "crossDomain": true,
-            "url": "http://172.16.1.120:1212/api/login",
+            "url": config.HOST + ":" + config.PORT + "/api/login",
             "method": "POST",
             "headers": {
                 "content-type": "application/x-www-form-urlencoded",

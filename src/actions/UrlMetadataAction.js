@@ -1,3 +1,4 @@
+import * as config from '../config';
 import * as types from './actionTypes';
 import $ from 'jquery';
 
@@ -5,8 +6,22 @@ import $ from 'jquery';
 export function loadAllUrls(data) {
     return {
         type: types.LOAD_URL_SUCCESS,
-        "data": data.urls
+        "urlList": data.urls
     };
+}
+
+export function addUrlSuccess(url) {
+    console.log("ADD_URL_SUCCESS", url)
+    return { type: types.ADD_URL_SUCCESS, url};
+}
+
+export function updateUrlSuccess(url) {
+    console.log("UPDATE_URL_SUCCESS", url)
+    return { type: types.UPDATE_URL_SUCCESS, url};
+}
+
+export function deleteUrlSuccess(id) {
+    return { type: types.DELETE_URL_SUCCESS, id};
 }
 
 // export function checkAuthStatus() {
@@ -23,7 +38,7 @@ function getAllUrls() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
-            url: "http://172.16.1.120:1212/api/urls",
+            url: config.HOST + ":" + config.PORT + "/api/urls",
             // beforeSend: function(xhr) {
             // 	xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(unescape(encodeURIComponent("harpreet" + ':' + "password"))))
             // },
@@ -63,7 +78,7 @@ function addURL(urlForm) {
             type: "POST",
             "async": true,
             "crossDomain": true,
-            "url": "http://172.16.1.120:1212/api/urlScrapper",
+            "url": config.HOST + ":" + config.PORT + "/api/urlScrapper",
             "method": "POST",
             "headers": {
                 "content-type": "application/x-www-form-urlencoded",
@@ -75,6 +90,7 @@ function addURL(urlForm) {
             success: function(data, status, response) {
                 console.log(response)
                 resolve({
+                    url:response.responseJSON,
                     statusCode: response.status,
                     message: response.statusText
                 })
@@ -94,7 +110,100 @@ export const saveURL = (urlForm) => {
         console.log(urlForm)
         return addURL(urlForm).then(response => {
             if (response.statusCode === 200) {
-                return dispatch(loadURLsWithMeta())
+                return dispatch(addUrlSuccess(response.url))
+            }
+        }).catch(error => {
+            return "dispatch(authFailed({}))"
+        });
+    };
+
+}
+
+function updateURL(urlForm) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "PUT",
+            "async": true,
+            "crossDomain": true,
+            "url": config.HOST + ":" + config.PORT + "/api/urlScrapper",
+            "method": "PUT",
+            "headers": {
+                "content-type": "application/x-www-form-urlencoded",
+                // "cache-control": "no-cache",
+            },
+            "data": {
+                "id": urlForm.id,
+                "url": urlForm.url
+            },
+            success: function(data, status, response) {
+                console.log(response)
+                resolve({
+                    url:response.responseJSON,
+                    statusCode: response.status,
+                    message: response.statusText
+                })
+            },
+            error: function(request, status, error) {
+                reject({
+                    errorCode: request.status,
+                    error: error
+                })
+            }
+        })
+    });
+
+}
+export const editURL = (urlForm) => {
+    return dispatch => {
+        console.log(urlForm)
+        return updateURL(urlForm).then(response => {
+            if (response.statusCode === 200) {
+                return dispatch(updateUrlSuccess(response.url))
+            }
+        }).catch(error => {
+            return "dispatch(authFailed({}))"
+        });
+    };
+
+}
+
+function deleteURL(id) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "DELETE",
+            "async": true,
+            "crossDomain": true,
+            "url": config.HOST + ":" + config.PORT + "/api/urlScrapper/" + id,
+            "method": "DELETE",
+            "headers": {
+                "content-type": "application/x-www-form-urlencoded",
+                // "cache-control": "no-cache",
+            },
+            success: function(data, status, response) {
+                console.log(data, status,  response)
+                resolve({
+                    id:id,
+                    statusCode: response.status,
+                    message: response.statusText
+                })
+            },
+            error: function(request, status, error) {
+                reject({
+                    errorCode: request.status,
+                    error: error
+                })
+            }
+        })
+    });
+
+}
+
+export const removeURL = (id) => {
+    return dispatch => {
+        console.log(id)
+        return deleteURL(id).then(response => {
+            if (response.statusCode === 200) {
+                return dispatch(deleteUrlSuccess(response.id))
             }
         }).catch(error => {
             return "dispatch(authFailed({}))"

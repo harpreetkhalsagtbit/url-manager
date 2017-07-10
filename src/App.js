@@ -20,15 +20,19 @@ class App extends Component {
             urlMetadata:[],
             urlForm: {},
             open:false,
+            urlIdToEdit:"",
             isRequested:this.props.isRequested || false
         };
         this.logoutHandler = this.logoutHandler.bind(this);
         this.onChangeTextInput = this.onChangeTextInput.bind(this);
         this.saveURLHandler = this.saveURLHandler.bind(this);
+        this.editURLHandler = this.editURLHandler.bind(this);
+        this.deleteURLHandler = this.deleteURLHandler.bind(this);
+        this.showEditModalHandler = this.showEditModalHandler.bind(this);
         this.showModal = this.showModal.bind(this);
     }
     componentDidMount(a,b,c) {
-        console.log("componentDidMount")
+        console.log("componentDidMount", this.state.isRequested)
         // this.props.authAction.checkAuthStatus()
         // this.props.getAuth()
         if(this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
@@ -59,6 +63,9 @@ class App extends Component {
             this.setState({
                 isRequested:true
             })
+        } else {
+            console.log("else")
+            this.setState({urlMetadata:[]})
         }
     }
 
@@ -66,11 +73,34 @@ class App extends Component {
         localStorage.setItem("token","")
         this.props.history.push("/sign-in")
     }
+    editURLHandler (id) {
+        console.log("editURLHandler", id)
+        this.setState({
+            urlIdToEdit:"",
+            open:false
+        })
+        this.props.urlMetadataAction.editURL({
+            id:this.state.urlIdToEdit,
+            url:this.state.urlForm.url
+        })
+    }
     saveURLHandler () {
         this.setState({
             open:false
         })
         this.props.urlMetadataAction.saveURL(this.state.urlForm)
+    }
+    deleteURLHandler (id) {
+        this.props.urlMetadataAction.removeURL(id)
+    }
+    showEditModalHandler (urlForm) {
+        this.setState({
+            open:true,
+            urlIdToEdit:urlForm._id,
+            urlForm:{
+                "url":urlForm.metadata.url
+            }
+        })
     }
     showModal() {
         this.setState({
@@ -81,7 +111,7 @@ class App extends Component {
         return true;
     }
     componentDidUpdate() {
-        console.log("didUpdate")
+        console.log("didUpdate", this.props)
     }
 
     render() {
@@ -100,8 +130,8 @@ class App extends Component {
                         Logout
                     </Button>
                 </main>
-                <ListItem listdata={this.state.urlMetadata}></ListItem>
-                <Modal open={this.state.open}header='Add URL' saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm}onChange={this.onChangeTextInput}></Modal>
+                <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
+                <Modal urlIdToEdit={this.state.urlIdToEdit} open={this.state.open} header='Add URL' editURLHandler={this.editURLHandler} saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></Modal>
                 <Button onClick={this.showModal}>Add More</Button>
             </div>
         );

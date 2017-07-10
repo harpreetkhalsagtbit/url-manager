@@ -2,8 +2,8 @@ import React from 'react'
 import { Button, Header, Modal } from 'semantic-ui-react'
 import TextInput from '../common/TextInput';
 
-const ModalShorthandExample = ({open, urlForm, saveURLHandler, header, content, onChange, errors={}}) => {
-  console.log("open", open)
+const ModalShorthandExample = ({open, urlIdToEdit, urlForm, editURLHandler, saveURLHandler, header, content, onChange, errors={}}) => {
+
   return (
     <Modal open={open}>
       <Modal.Header>URL Manager</Modal.Header>
@@ -24,7 +24,7 @@ const ModalShorthandExample = ({open, urlForm, saveURLHandler, header, content, 
         <Button>
         	Cancel
         </Button>
-        <Button onClick={saveURLHandler}>
+        <Button onClick={urlIdToEdit?editURLHandler:saveURLHandler}>
         	Save
         </Button>
       </Modal.Actions>
