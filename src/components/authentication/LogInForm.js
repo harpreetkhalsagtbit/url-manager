@@ -4,29 +4,32 @@ import PropTypes from 'prop-types'; // ES6
 
 const CourseForm = ({logInDetails, onSave, onChange, loading, errors}) => {
 	return (
-		<form>
-			<TextInput
-				name="username"
-				label="Username"
-				value={logInDetails.username}
-				onChange={onChange}
-				error={errors.title}/>
+		<div className="ui column stackable center page grid">
+		  <div className="four wide column"></div>
+		  <form className="ui six wide column form segment">
+			  <TextInput
+			  	name="username"
+			  	label="Username"
+			  	value={logInDetails.username}
+			  	onChange={onChange}
+			  	error={errors.title}/>
 
-			<TextInput
-				name="password"
-				label="Password"
-				value={logInDetails.password}
-				onChange={onChange}
-				error={errors.category}/>
+			  <TextInput
+			  	name="password"
+			  	label="Password"
+			  	value={logInDetails.password}
+			  	onChange={onChange}
+			  	error={errors.category}/>
 
-			<input
-				type="submit"
-				disabled={loading}
-				value={loading ? 'Authenticating...' : 'Done'}
-				className="btn btn-primary"
-				onClick={onSave}/>
+			  	<button className="ui button"
+					type="submit"
+					disabled={loading}
+					onClick={onSave}
+					value={loading ? 'Authenticating...' : 'Done'}
+			  	>{loading ? 'Authenticating...' : 'Login'}</button>
 
-		</form>
+		  </form>
+		</div>
 	);
 };
 
