@@ -2,7 +2,7 @@ import React from 'react';
 import TextInput from '../common/TextInput';
 import PropTypes from 'prop-types'; // ES6
 
-const CourseForm = ({logInDetails, onSave, onChange, loading, errors}) => {
+const LogInForm = ({logInDetails, onSave, onChange, loading, errors}) => {
 	return (
 		<div className="ui column stackable center page grid">
 		  <div className="four wide column"></div>
@@ -33,7 +33,7 @@ const CourseForm = ({logInDetails, onSave, onChange, loading, errors}) => {
 	);
 };
 
-CourseForm.propTypes = {
+LogInForm.propTypes = {
 	// course: React.PropTypes.object.isRequired,
 	onSave: PropTypes.func,
 	onChange: PropTypes.func,
@@ -41,6 +41,6 @@ CourseForm.propTypes = {
 	errors: PropTypes.object
 };
 
-export default CourseForm;
+export default LogInForm;
 
 
