@@ -19,6 +19,11 @@ export default function authReducer(state = initialState, action) {
 				isLoggedIn: action.isLoggedIn
 			}
 
+		case types.SIGN_UP_SUCCESS:
+			return {
+				signUpStatus: action.signUpStatus
+			}
+
 		default:
 			return state;
 	}

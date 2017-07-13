@@ -18,6 +18,14 @@ export function authSuccess(status) {
     };
 }
 
+export function signUpSuccess(status) {
+    var isLoggedIn = status;
+    return {
+        type: types.SIGN_UP_SUCCESS,
+        "signUpStatus": true
+    };
+}
+
 function isUserAlreadyLoggedIn() {
     return new Promise((resolve, reject) => {
         var token = localStorage.getItem("token")
@@ -111,6 +119,57 @@ export const verifyLogIn = (logInDetails) => {
             if (response.statusCode === 200) {
                 localStorage.setItem("token", response.token)
                 return dispatch(authSuccess(true))
+            }
+        }).catch(error => {
+            if (error.errorCode === 400) {
+                return dispatch(authFailed(error))
+            }
+        });
+    };
+}
+
+function signUpNewUser(signUpDetails) {
+    return new Promise((resolve, reject) => {
+
+        $.ajax({
+            type: "POST",
+            "async": true,
+            "crossDomain": true,
+            "url": config.HOST + ":" + config.PORT + "/api/signup",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/x-www-form-urlencoded",
+                // "cache-control": "no-cache",
+            },
+            "data": {
+                "email": signUpDetails.username,
+                "password": signUpDetails.password
+            },
+            success: function(data, status, response) {
+                resolve({
+                    statusCode: response.status,
+                    message: response.statusText,
+                    data: data
+                })
+            },
+            error: function(request, status, error) {
+                reject({
+                    errorCode: request.status,
+                    error: error
+                })
+            }
+        })
+    });
+
+}
+
+export const signUpSubmit = (signUpDetails) => {
+    return dispatch => {
+        return signUpNewUser(signUpDetails).then(response => {
+            if (response.statusCode === 200) {
+                if(response.data.logIn == "sign up success") {
+                    return dispatch(signUpSuccess(true))
+                }
             }
         }).catch(error => {
             if (error.errorCode === 400) {

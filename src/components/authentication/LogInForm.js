@@ -1,8 +1,9 @@
 import React from 'react';
 import TextInput from '../common/TextInput';
+import { Button } from 'semantic-ui-react'
 import PropTypes from 'prop-types'; // ES6
 
-const LogInForm = ({logInDetails, onSave, onChange, loading, errors}) => {
+const LogInForm = ({formDetails, onClick, onChange, loading, labelButton, errors}) => {
 	return (
 		<div className="ui column stackable center page grid">
 		  <div className="four wide column"></div>
@@ -10,23 +11,23 @@ const LogInForm = ({logInDetails, onSave, onChange, loading, errors}) => {
 			  <TextInput
 			  	name="username"
 			  	label="Username"
-			  	value={logInDetails.username}
+			  	value={formDetails.username}
 			  	onChange={onChange}
 			  	error={errors.title}/>
 
 			  <TextInput
 			  	name="password"
 			  	label="Password"
-			  	value={logInDetails.password}
+			  	value={formDetails.password}
 			  	onChange={onChange}
 			  	error={errors.category}/>
 
-			  	<button className="ui button"
+			  	<Button primary
 					type="submit"
 					disabled={loading}
-					onClick={onSave}
+					onClick={onClick}
 					value={loading ? 'Authenticating...' : 'Done'}
-			  	>{loading ? 'Authenticating...' : 'Login'}</button>
+			  	>{loading ? 'Authenticating...' : labelButton}</Button>
 
 		  </form>
 		</div>
@@ -35,7 +36,7 @@ const LogInForm = ({logInDetails, onSave, onChange, loading, errors}) => {
 
 LogInForm.propTypes = {
 	// course: React.PropTypes.object.isRequired,
-	onSave: PropTypes.func,
+	onClick: PropTypes.func,
 	onChange: PropTypes.func,
 	loading: PropTypes.bool,
 	errors: PropTypes.object

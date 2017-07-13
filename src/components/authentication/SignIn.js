@@ -80,9 +80,10 @@ class SignIn extends Component {
             <div>
                 <LogInForm
                     onChange = {this.updateLogInFormState}
-                    onSave={this.submitLogInForm}
-                    logInDetails={this.state.logInDetails}
+                    onClick={this.submitLogInForm}
+                    formDetails={this.state.logInDetails}
                     errors={this.state.errors}
+                    labelButton="Login"
                 />
                 {showError}
             </div>

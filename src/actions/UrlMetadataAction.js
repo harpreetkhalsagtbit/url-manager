@@ -36,27 +36,35 @@ export function deleteUrlSuccess(id) {
 
 function getAllUrls() {
     return new Promise((resolve, reject) => {
-        $.ajax({
-            type: 'GET',
-            url: config.HOST + ":" + config.PORT + "/api/urls",
-            // beforeSend: function(xhr) {
-            // 	xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(unescape(encodeURIComponent("harpreet" + ':' + "password"))))
-            // },
-            success: function(data, status, response) {
-                // console.log(data)
-                resolve({
-                    statusCode: response.status,
-                    urls: data,
-                })
-            },
-            error: function(request, status, error) {
-                console.log(error)
-                reject({
-                    errorCode: request.status,
-                    error: error
-                })
-            }
-        })
+        var token = localStorage.getItem("token")
+        if (token) {
+            $.ajax({
+                type: 'GET',
+                url: config.HOST + ":" + config.PORT + "/api/urls?token=" + token,
+                // beforeSend: function(xhr) {
+                // 	xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(unescape(encodeURIComponent("harpreet" + ':' + "password"))))
+                // },
+                success: function(data, status, response) {
+                    // console.log(data)
+                    resolve({
+                        statusCode: response.status,
+                        urls: data,
+                    })
+                },
+                error: function(request, status, error) {
+                    console.log(error)
+                    reject({
+                        errorCode: request.status,
+                        error: error
+                    })
+                }
+            })
+        } else {
+            reject({
+                errorCode: 403,
+                error: "auth Failed"
+            })
+        }
     });
 }
 

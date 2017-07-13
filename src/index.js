@@ -7,6 +7,7 @@ import store, { history } from './store'
 
 import { Route } from 'react-router-dom';
 import SignIn from './components/authentication/SignIn';
+import SignUp from './components/authentication/SignUp';
 import {checkAuthStatus} from './actions/AuthAction';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -23,6 +24,7 @@ render(
     	<div>
 			<Route exact path="/" component={App} />
 			<Route exact path="/sign-in" component={SignIn} />
+			<Route exact path="/sign-up" component={SignUp} />
 		</div>
     </ConnectedRouter>
   </Provider>,
