@@ -37,6 +37,11 @@ class App extends Component {
         // this.props.getAuth()
         if(this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
             this.setState({urlMetadata:this.props.urlMetadata})
+        } else if(this.props.auth.isLoggedIn && !this.state.isRequested) {
+            this.props.urlMetadataAction.loadURLsWithMeta()
+            this.setState({
+                isRequested:true
+            })
         }
     }
 
