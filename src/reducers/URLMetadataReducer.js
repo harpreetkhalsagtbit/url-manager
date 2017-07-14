@@ -27,7 +27,7 @@ export default function urlMetadataReducer(state = initialState.urlList, action)
 
 		case types.UPDATE_URL_SUCCESS:
 			return [
-				...state.filter(url => url.id !== action.url.id),
+				...state.filter(url => url._id !== action.url._id),
 				Object.assign({}, action.url)
 			];
 
