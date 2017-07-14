@@ -70,8 +70,7 @@ class App extends Component {
     }
 
     logoutHandler () {
-        localStorage.setItem("token","")
-        this.props.history.push("/sign-in")
+        this.props.authAction.logout()
     }
     editURLHandler (id) {
         console.log("editURLHandler", id)

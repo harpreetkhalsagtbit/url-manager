@@ -2,7 +2,8 @@ import * as types from '../actions/actionTypes';
 // import initialState from './initialState';
 
 const initialState = {
-	isLoggedIn: false
+	isLoggedIn: false,
+	signUpStatus: false
 }
 
 export default function authReducer(state = initialState, action) {
@@ -19,10 +20,16 @@ export default function authReducer(state = initialState, action) {
 				isLoggedIn: action.isLoggedIn
 			}
 
+		case types.LOGOUT_SUCCESS:
+			return {
+				isLoggedIn: initialState.isLoggedIn
+			}
+
 		case types.SIGN_UP_SUCCESS:
 			return {
 				signUpStatus: action.signUpStatus
 			}
+
 
 		default:
 			return state;

@@ -82,34 +82,42 @@ export const loadURLsWithMeta = () => {
 
 function addURL(urlForm) {
     return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "POST",
-            "async": true,
-            "crossDomain": true,
-            "url": config.HOST + ":" + config.PORT + "/api/urlScrapper",
-            "method": "POST",
-            "headers": {
-                "content-type": "application/x-www-form-urlencoded",
-                // "cache-control": "no-cache",
-            },
-            "data": {
-                "url": urlForm.url
-            },
-            success: function(data, status, response) {
-                console.log(response)
-                resolve({
-                    url:response.responseJSON,
-                    statusCode: response.status,
-                    message: response.statusText
-                })
-            },
-            error: function(request, status, error) {
-                reject({
-                    errorCode: request.status,
-                    error: error
-                })
-            }
-        })
+        var token = localStorage.getItem("token")
+        if (token) {
+            $.ajax({
+                type: "POST",
+                "async": true,
+                "crossDomain": true,
+                "url": config.HOST + ":" + config.PORT + "/api/urlScrapper?token=" + token,
+                "method": "POST",
+                "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    // "cache-control": "no-cache",
+                },
+                "data": {
+                    "url": urlForm.url
+                },
+                success: function(data, status, response) {
+                    console.log(response)
+                    resolve({
+                        url:response.responseJSON,
+                        statusCode: response.status,
+                        message: response.statusText
+                    })
+                },
+                error: function(request, status, error) {
+                    reject({
+                        errorCode: request.status,
+                        error: error
+                    })
+                }
+            })
+        } else {
+            reject({
+                errorCode: 403,
+                error: "auth Failed"
+            })
+        }
     });
 
 }
@@ -129,35 +137,43 @@ export const saveURL = (urlForm) => {
 
 function updateURL(urlForm) {
     return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "PUT",
-            "async": true,
-            "crossDomain": true,
-            "url": config.HOST + ":" + config.PORT + "/api/urlScrapper",
-            "method": "PUT",
-            "headers": {
-                "content-type": "application/x-www-form-urlencoded",
-                // "cache-control": "no-cache",
-            },
-            "data": {
-                "id": urlForm.id,
-                "url": urlForm.url
-            },
-            success: function(data, status, response) {
-                console.log(response)
-                resolve({
-                    url:response.responseJSON,
-                    statusCode: response.status,
-                    message: response.statusText
-                })
-            },
-            error: function(request, status, error) {
-                reject({
-                    errorCode: request.status,
-                    error: error
-                })
-            }
-        })
+        var token = localStorage.getItem("token")
+        if (token) {
+            $.ajax({
+                type: "PUT",
+                "async": true,
+                "crossDomain": true,
+                "url": config.HOST + ":" + config.PORT + "/api/urlScrapper?token=" + token,
+                "method": "PUT",
+                "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    // "cache-control": "no-cache",
+                },
+                "data": {
+                    "id": urlForm.id,
+                    "url": urlForm.url
+                },
+                success: function(data, status, response) {
+                    console.log(response)
+                    resolve({
+                        url:response.responseJSON,
+                        statusCode: response.status,
+                        message: response.statusText
+                    })
+                },
+                error: function(request, status, error) {
+                    reject({
+                        errorCode: request.status,
+                        error: error
+                    })
+                }
+            })
+        } else {
+            reject({
+                errorCode: 403,
+                error: "auth Failed"
+            })
+        }
     });
 
 }
@@ -177,31 +193,39 @@ export const editURL = (urlForm) => {
 
 function deleteURL(id) {
     return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "DELETE",
-            "async": true,
-            "crossDomain": true,
-            "url": config.HOST + ":" + config.PORT + "/api/urlScrapper/" + id,
-            "method": "DELETE",
-            "headers": {
-                "content-type": "application/x-www-form-urlencoded",
-                // "cache-control": "no-cache",
-            },
-            success: function(data, status, response) {
-                console.log(data, status,  response)
-                resolve({
-                    id:id,
-                    statusCode: response.status,
-                    message: response.statusText
-                })
-            },
-            error: function(request, status, error) {
-                reject({
-                    errorCode: request.status,
-                    error: error
-                })
-            }
-        })
+        var token = localStorage.getItem("token")
+        if (token) {
+            $.ajax({
+                type: "DELETE",
+                "async": true,
+                "crossDomain": true,
+                "url": config.HOST + ":" + config.PORT + "/api/urlScrapper/" + id + "?token=" + token,
+                "method": "DELETE",
+                "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    // "cache-control": "no-cache",
+                },
+                success: function(data, status, response) {
+                    console.log(data, status,  response)
+                    resolve({
+                        id:id,
+                        statusCode: response.status,
+                        message: response.statusText
+                    })
+                },
+                error: function(request, status, error) {
+                    reject({
+                        errorCode: request.status,
+                        error: error
+                    })
+                }
+            })
+        } else {
+            reject({
+                errorCode: 403,
+                error: "auth Failed"
+            })
+        }
     });
 
 }
