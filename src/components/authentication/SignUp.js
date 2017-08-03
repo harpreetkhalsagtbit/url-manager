@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import * as authActions from '../../actions/AuthAction';
 import {connect} from 'react-redux';
 import SignUpForm from './LogInForm';
+import FlexView from 'react-flexview';
 
 
 class SignIn extends Component {
@@ -73,16 +74,18 @@ class SignIn extends Component {
             showError = <h1>Error</h1>
         }
         return (
-            <div>
-                <SignUpForm
-                    onChange = {this.updateSignUpFormState}
-                    onClick={this.submitSignUpForm}
-                    formDetails={this.state.signUpDetails}
-                    errors={this.state.errors}
-                    labelButton="Sign Up"
-                />
-                {showError}
-            </div>
+            <FlexView column style={{ height: '100vh' }} hAlignContent='center' vAlignContent='center'>
+                <FlexView>
+                    <SignUpForm
+                        onChange = {this.updateSignUpFormState}
+                        onClick={this.submitSignUpForm}
+                        formDetails={this.state.signUpDetails}
+                        errors={this.state.errors}
+                        labelButton="Sign Up"
+                    />
+                    {showError}
+                </FlexView>
+            </FlexView>
         );
     }
 }
