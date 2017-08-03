@@ -12,6 +12,7 @@ import {checkAuthStatus} from './actions/AuthAction';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
+import 'react-flexview/lib/flexView.css' // FlexView is useless without its style
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 
