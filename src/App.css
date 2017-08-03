@@ -27,3 +27,7 @@ form > * {
  margin-bottom: 10px;
  margin-top: 10px;
 }
+
+body {
+  background-color: #d4d4d5 !important
+}

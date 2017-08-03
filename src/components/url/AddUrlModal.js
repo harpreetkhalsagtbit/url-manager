@@ -4,7 +4,7 @@ import TextInput from '../common/TextInput';
 import TextArea from '../common/TextArea';
 import Dropdown from '../common/Dropdown';
 
-const ModalShorthandExample = ({open, urlForm, tags, editURLHandler, saveURLHandler, onChange, errors={}}) => {
+const ModalShorthandExample = ({open, urlForm, tags, hideModal, editURLHandler, saveURLHandler, onChange, errors={}}) => {
   console.log("tags in modal", tags)
   return (
     <Modal open={open}>
@@ -27,7 +27,7 @@ const ModalShorthandExample = ({open, urlForm, tags, editURLHandler, saveURLHand
         error={errors.description}/>
       </Modal.Content>
       <Modal.Actions>
-        <Button>
+        <Button onClick={hideModal}>
         	Cancel
         </Button>
         <Button onClick={saveURLHandler}>

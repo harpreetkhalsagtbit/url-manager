@@ -10,6 +10,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Button } from 'semantic-ui-react'
 import ListItem from './components/common/ListItem'
 import AddUrlModal from './components/url/AddUrlModal.js';
+import FlexView from 'react-flexview';
 
 // import store from './store'
 
@@ -31,6 +32,7 @@ class App extends Component {
         this.deleteURLHandler = this.deleteURLHandler.bind(this);
         this.showEditModalHandler = this.showEditModalHandler.bind(this);
         this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
     }
     componentDidMount() {
         // this.props.authAction.checkAuthStatus()
@@ -113,6 +115,11 @@ class App extends Component {
             open:true
         })
     }
+    hideModal() {
+        this.setState({
+            open:false
+        })
+    }
     shouldComponentUpdate(nextProps, nextState) {
         return true;
     }
@@ -121,26 +128,35 @@ class App extends Component {
     }
 
     render() {
-        // console.log()
         return (
-            <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome</h2>
-                </div>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
-                <main>
-                    <Button onClick={this.logoutHandler}>
-                        Logout
-                    </Button>
-                </main>
-                <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
-                <AddUrlModal open={this.state.open} saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></AddUrlModal>
-                <Button onClick={this.showModal}>Add More</Button>
+            <div className="main">
+                <FlexView style={{height: 50, backgroundColor: '#D1236D'}}>
+                    <FlexView  hAlignContent='center' marginTop='5px' marginBottom='5px' marginLeft='auto'>
+                        <Button primary onClick={this.logoutHandler}>
+                            Logout
+                        </Button>
+                    </FlexView>
+                </FlexView>
+                <FlexView style={{height: 10}}>
+                </FlexView>
+                <FlexView style={{backgroundColor: '#1A91EB'}}>
+                    <FlexView hAlignContent='center' marginTop='15px' marginBottom='15px' marginLeft='auto' marginRight='auto'>
+                        <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
+                    </FlexView>
+                </FlexView>
+                <FlexView hAlignContent='right' marginBottom='15px' style={{backgroundColor: '#1A91EB'}}>
+                    <FlexView marginBottom='15px' marginRight='15px'>
+                        <Button negative circular icon='plus' onClick={this.showModal}></Button>
+                    </FlexView>
+                </FlexView>
+                <AddUrlModal open={this.state.open} hideModal={this.hideModal} saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></AddUrlModal>
             </div>
         );
+            // <div className="App">
+            //     <main>
+            //     </main>
+            //     <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
+            // </div>
     }
 }
 
