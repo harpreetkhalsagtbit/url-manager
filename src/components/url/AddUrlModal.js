@@ -25,7 +25,6 @@ const ModalShorthandExample = ({open, urlForm, tags, editURLHandler, saveURLHand
         value={urlForm.urldesc}
         onChange={onChange}
         error={errors.description}/>
-      <Dropdown></Dropdown>
       </Modal.Content>
       <Modal.Actions>
         <Button>
