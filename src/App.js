@@ -9,7 +9,8 @@ import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Button } from 'semantic-ui-react'
 import ListItem from './components/common/ListItem'
-import Modal from './components/common/Modal'
+import AddUrlModal from './components/url/AddUrlModal.js';
+
 // import store from './store'
 
 class App extends Component {
@@ -31,8 +32,7 @@ class App extends Component {
         this.showEditModalHandler = this.showEditModalHandler.bind(this);
         this.showModal = this.showModal.bind(this);
     }
-    componentDidMount(a,b,c) {
-        console.log("componentDidMount", this.state.isRequested)
+    componentDidMount() {
         // this.props.authAction.checkAuthStatus()
         // this.props.getAuth()
         if(this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
@@ -40,7 +40,8 @@ class App extends Component {
         } else if(this.props.auth.isLoggedIn && !this.state.isRequested) {
             this.props.urlMetadataAction.loadURLsWithMeta()
             this.setState({
-                isRequested:true
+                isRequested:true,
+                isLoggedIn:this.props.auth.isLoggedIn
             })
         }
     }
@@ -65,11 +66,12 @@ class App extends Component {
             // do it in this way using promises
             // and manually setting state
             this.props.urlMetadataAction.loadURLsWithMeta()
+
             this.setState({
-                isRequested:true
+                isRequested:true,
+                isLoggedIn:nextProps.auth.isLoggedIn
             })
         } else {
-            console.log("else")
             this.setState({urlMetadata:[]})
         }
     }
@@ -135,7 +137,7 @@ class App extends Component {
                     </Button>
                 </main>
                 <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
-                <Modal urlIdToEdit={this.state.urlIdToEdit} open={this.state.open} header='Add URL' editURLHandler={this.editURLHandler} saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></Modal>
+                <AddUrlModal open={this.state.open} saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></AddUrlModal>
                 <Button onClick={this.showModal}>Add More</Button>
             </div>
         );
