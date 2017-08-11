@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import {TextArea } from 'semantic-ui-react'
 
-const TextAreaInput = ({name, label, onChange, placeHolder, value="", error}) => {
+const TextAreaInput = ({name, label, onChange, rows, placeHolder, value="", error}) => {
 	let wrapperClass = 'form-group';
 	if(error && error.length > 0) {
 		wrapperClass += " " + "has-error";
@@ -15,6 +15,7 @@ const TextAreaInput = ({name, label, onChange, placeHolder, value="", error}) =>
 				<TextArea
 					type="text"
 					name={name}
+					rows={rows}
 					className="form-control"
 					placeholder={placeHolder}
 					value={value}

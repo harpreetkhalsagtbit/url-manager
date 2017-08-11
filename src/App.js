@@ -7,9 +7,11 @@ import {connect} from 'react-redux';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
+import { history } from './store'
+import Header from './components/common/Header'
 import { Button } from 'semantic-ui-react'
 import ListItem from './components/common/ListItem'
-import AddUrlModal from './components/url/AddUrlModal.js';
+// import AddUrlModal from './components/url/AddUrlModal.js';
 import FlexView from 'react-flexview';
 
 // import store from './store'
@@ -21,7 +23,6 @@ class App extends Component {
             auth:Object.assign({}, this.props.auth),
             urlMetadata:[],
             urlForm: {},
-            open:false,
             urlIdToEdit:"",
             isRequested:this.props.isRequested || false
         };
@@ -31,8 +32,7 @@ class App extends Component {
         this.editURLHandler = this.editURLHandler.bind(this);
         this.deleteURLHandler = this.deleteURLHandler.bind(this);
         this.showEditModalHandler = this.showEditModalHandler.bind(this);
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
+        this.showAddUrlPage = this.showAddUrlPage.bind(this);
     }
     componentDidMount() {
         // this.props.authAction.checkAuthStatus()
@@ -84,8 +84,7 @@ class App extends Component {
     editURLHandler (id) {
         console.log("editURLHandler", id)
         this.setState({
-            urlIdToEdit:"",
-            open:false
+            urlIdToEdit:""
         })
         this.props.urlMetadataAction.editURL({
             id:this.state.urlIdToEdit,
@@ -93,9 +92,6 @@ class App extends Component {
         })
     }
     saveURLHandler () {
-        this.setState({
-            open:false
-        })
         this.props.urlMetadataAction.saveURL(this.state.urlForm)
     }
     deleteURLHandler (id) {
@@ -103,22 +99,14 @@ class App extends Component {
     }
     showEditModalHandler (urlForm) {
         this.setState({
-            open:true,
             urlIdToEdit:urlForm._id,
             urlForm:{
                 "url":urlForm.metadata.url
             }
         })
     }
-    showModal() {
-        this.setState({
-            open:true
-        })
-    }
-    hideModal() {
-        this.setState({
-            open:false
-        })
+    showAddUrlPage() {
+        history.push('/add-url')
     }
     shouldComponentUpdate(nextProps, nextState) {
         return true;
@@ -130,15 +118,7 @@ class App extends Component {
     render() {
         return (
             <div className="main">
-                <FlexView style={{height: 50, backgroundColor: '#D1236D'}}>
-                    <FlexView  hAlignContent='center' marginTop='5px' marginBottom='5px' marginLeft='auto'>
-                        <Button primary onClick={this.logoutHandler}>
-                            Logout
-                        </Button>
-                    </FlexView>
-                </FlexView>
-                <FlexView style={{height: 10}}>
-                </FlexView>
+                <Header logoutHandler={this.logoutHandler}></Header>
                 <FlexView style={{backgroundColor: '#1A91EB'}}>
                     <FlexView hAlignContent='center' marginTop='15px' marginBottom='15px' marginLeft='auto' marginRight='auto'>
                         <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
@@ -146,12 +126,12 @@ class App extends Component {
                 </FlexView>
                 <FlexView hAlignContent='right' marginBottom='15px' style={{backgroundColor: '#1A91EB'}}>
                     <FlexView marginBottom='15px' marginRight='15px'>
-                        <Button negative circular icon='plus' onClick={this.showModal}></Button>
+                        <Button negative circular icon='plus' onClick={this.showAddUrlPage}></Button>
                     </FlexView>
                 </FlexView>
-                <AddUrlModal open={this.state.open} hideModal={this.hideModal} saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></AddUrlModal>
             </div>
         );
+                // <AddUrlModal saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></AddUrlModal>
             // <div className="App">
             //     <main>
             //     </main>
