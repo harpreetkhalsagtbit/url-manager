@@ -11,7 +11,7 @@ import { history } from './store'
 import Header from './components/common/Header'
 import { Button } from 'semantic-ui-react'
 import ListItem from './components/common/ListItem'
-// import AddUrlModal from './components/url/AddUrlModal.js';
+import AddUrlShort from './components/url/AddUrlShort';
 import FlexView from 'react-flexview';
 
 // import store from './store'
@@ -93,6 +93,11 @@ class App extends Component {
     }
     saveURLHandler () {
         this.props.urlMetadataAction.saveURL(this.state.urlForm)
+        this.setState({
+            urlForm:{
+                "url":""
+            }
+        })
     }
     deleteURLHandler (id) {
         this.props.urlMetadataAction.removeURL(id)
@@ -119,18 +124,19 @@ class App extends Component {
         return (
             <div className="main">
                 <Header logoutHandler={this.logoutHandler}></Header>
+                <AddUrlShort saveURLHandler={this.saveURLHandler} onChange={this.onChangeTextInput} urlShortForm={this.state.urlForm}/>
                 <FlexView style={{backgroundColor: '#1A91EB'}}>
                     <FlexView hAlignContent='center' marginTop='15px' marginBottom='15px' marginLeft='auto' marginRight='auto'>
                         <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
                     </FlexView>
                 </FlexView>
-                <FlexView hAlignContent='right' marginBottom='15px' style={{backgroundColor: '#1A91EB'}}>
-                    <FlexView marginBottom='15px' marginRight='15px'>
-                        <Button negative circular icon='plus' onClick={this.showAddUrlPage}></Button>
-                    </FlexView>
-                </FlexView>
             </div>
         );
+                // <FlexView hAlignContent='right' marginBottom='15px' style={{backgroundColor: '#1A91EB'}}>
+                //     <FlexView marginBottom='15px' marginRight='15px'>
+                //         <Button negative circular icon='plus' onClick={this.showAddUrlPage}></Button>
+                //     </FlexView>
+                // </FlexView>
                 // <AddUrlModal saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></AddUrlModal>
             // <div className="App">
             //     <main>
