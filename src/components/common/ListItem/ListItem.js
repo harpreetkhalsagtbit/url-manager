@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types'; // ES6
 import { Button, Item } from 'semantic-ui-react'
 import './ListItem.css';
+import $ from 'jquery'; 
 
 const ListItemForURL = ({listdata = [], showEditModalHandler, deleteURLHandler, label, onChange, placeHolder, value, error}) => {
 	let wrapperClass = 'form-group';
@@ -13,12 +14,20 @@ const ListItemForURL = ({listdata = [], showEditModalHandler, deleteURLHandler, 
 		showEditModalHandler(url)
 	}
 
+	let _onMouseEnterHandler = function(id, misc, event) {
+		$("#" + id + "_image").addClass("focusImage")
+	}
+
+	let _onMouseLeaveHandler = function(id, misc, event) {
+		$("#" + id + "_image").removeClass("focusImage")
+	}
+
 	return (
 		<ul className="flex-container">
 			{listdata.map((url, index) => {
-			    return (<li key={url._id} className="flex-item">
+			    return (<li key={url._id} className="flex-item shadow" onMouseEnter={_onMouseEnterHandler.bind(this, url._id)} onMouseLeave={_onMouseLeaveHandler.bind(this, url._id)}>
 					<div className="imgContainer">
-						<img src={url.metadata.image} />
+						<img id={url._id + "_image"} src={url.metadata.image} />
 					</div>
 					<div className="descContainer">
 						<h1 className="titleCard"><a href={url.metadata.url} target="_blank">{url.metadata.title}</a></h1>

@@ -24,8 +24,19 @@
 	font-size: 3em;
 }
 
+.shadow {
+   -moz-box-shadow:    rgba(0,0,0,.1) 0 2px 5px;
+   -webkit-box-shadow: rgba(0,0,0,.1) 0 2px 5px;
+   box-shadow:         rgba(0,0,0,.1) 0 2px 5px;
+}
+
 img {
+	opacity: 0.5;
 	max-width: 100%;
+}
+
+.focusImage {
+	opacity: 1
 }
 
 .imgContainer {
