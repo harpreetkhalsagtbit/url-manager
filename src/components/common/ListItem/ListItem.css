@@ -31,7 +31,7 @@
 }
 
 img {
-	opacity: 0.5;
+	opacity: 0.7;
 	max-width: 100%;
 }
 
@@ -39,6 +39,12 @@ img {
 	opacity: 1
 }
 
+.focusCard {
+   -moz-box-shadow:    rgba(0,0,0,.3) 0 2px 5px;
+   -webkit-box-shadow: rgba(0,0,0,.3) 0 2px 5px;
+   box-shadow:         rgba(0,0,0,.3) 0 2px 5px;
+
+}
 .imgContainer {
 	display: flex;
 	width: 400px;

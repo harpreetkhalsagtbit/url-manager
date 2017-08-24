@@ -16,16 +16,19 @@ const ListItemForURL = ({listdata = [], showEditModalHandler, deleteURLHandler, 
 
 	let _onMouseEnterHandler = function(id, misc, event) {
 		$("#" + id + "_image").addClass("focusImage")
+		$("#" + id).addClass("focusCard")
 	}
 
 	let _onMouseLeaveHandler = function(id, misc, event) {
 		$("#" + id + "_image").removeClass("focusImage")
+		$("#" + id).removeClass("focusCard")
+
 	}
 
 	return (
 		<ul className="flex-container">
 			{listdata.map((url, index) => {
-			    return (<li key={url._id} className="flex-item shadow" onMouseEnter={_onMouseEnterHandler.bind(this, url._id)} onMouseLeave={_onMouseLeaveHandler.bind(this, url._id)}>
+			    return (<li key={url._id} id={url._id} className="flex-item shadow" onMouseEnter={_onMouseEnterHandler.bind(this, url._id)} onMouseLeave={_onMouseLeaveHandler.bind(this, url._id)}>
 					<div className="imgContainer">
 						<img id={url._id + "_image"} src={url.metadata.image} />
 					</div>
