@@ -8,9 +8,9 @@ import {connect} from 'react-redux';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 import { history } from './store'
-import Header from './components/common/Header'
+import Header from './components/common/Header/Header'
 import { Button } from 'semantic-ui-react'
-import ListItem from './components/common/ListItem'
+import ListItem from './components/common/ListItem/ListItem'
 import AddUrlShort from './components/url/AddUrlShort';
 import FlexView from 'react-flexview';
 
@@ -122,16 +122,26 @@ class App extends Component {
 
     render() {
         return (
-            <div className="main">
+            <div>
                 <Header logoutHandler={this.logoutHandler}></Header>
                 <AddUrlShort saveURLHandler={this.saveURLHandler} onChange={this.onChangeTextInput} urlShortForm={this.state.urlForm}/>
-                <FlexView style={{backgroundColor: '#1A91EB'}}>
-                    <FlexView hAlignContent='center' marginTop='15px' marginBottom='15px' marginLeft='auto' marginRight='auto'>
-                        <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
-                    </FlexView>
-                </FlexView>
+                <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
             </div>
         );
+
+        // <div className="main">
+        //     <Header logoutHandler={this.logoutHandler}></Header>
+        //     <AddUrlShort saveURLHandler={this.saveURLHandler} onChange={this.onChangeTextInput} urlShortForm={this.state.urlForm}/>
+        //     <FlexView style={{backgroundColor: '#1A91EB'}}>
+        //         <FlexView hAlignContent='center' marginTop='15px' marginBottom='15px' marginLeft='auto' marginRight='auto'>
+        //             <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
+        //         </FlexView>
+        //     </FlexView>
+        // </div>
+
+
+
+
                 // <FlexView hAlignContent='right' marginBottom='15px' style={{backgroundColor: '#1A91EB'}}>
                 //     <FlexView marginBottom='15px' marginRight='15px'>
                 //         <Button negative circular icon='plus' onClick={this.showAddUrlPage}></Button>

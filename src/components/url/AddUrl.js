@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import AddUrlForm from './AddUrlForm';
 import FlexView from 'react-flexview';
-import Header from '../common/Header'
+import Header from '../common/Header/Header'
 
 
 class AddUrl extends Component {
