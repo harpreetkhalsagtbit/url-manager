@@ -227,7 +227,6 @@ function deleteURL(id) {
             })
         }
     });
-
 }
 
 export const removeURL = (id) => {

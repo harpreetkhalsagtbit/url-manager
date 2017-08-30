@@ -65,6 +65,7 @@ img {
 	font-weight: 300;
 	/*text-overflow: ellipsis;*/
 	padding: 10px;
+	margin-bottom: 0px;
 }
 
 .descCard {
@@ -74,4 +75,62 @@ img {
 	font-weight: 300;
 	/*text-overflow: ellipsis;*/
 	padding: 10px;
+}
+
+.tagContainerCard {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	align-items: stretch;
+	/*justify-content: space-around;*/
+}
+
+.tagsCard {
+	text-align: left;
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+	/*text-overflow: ellipsis;*/
+	padding: 10px;
+	background-color: red;
+    border-radius: 15px;
+    margin: 5px;
+    line-height: 20px;
+}
+
+.cardToolsHeader {
+	position: absolute;
+	background-color: red;
+	line-height: 30px;
+	/*flex-grow: 1;*/
+	width: 400px;
+	z-index: 100;
+}
+
+.cardToolsHeader ui {
+	list-style: none;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	justify-content: flex-end;
+}
+
+.cardToolsItems {
+	font-size: 20px;
+	padding-right: 10px;	
+}
+
+.show {
+	visibility: visible;
+}
+
+.hide {
+	visibility: hidden;
 }
