@@ -11,6 +11,7 @@ import SignUp from './components/authentication/SignUp';
 import AddUrl from './components/url/AddUrl';
 import {checkAuthStatus} from './actions/AuthAction';
 import App from './App';
+import Test from './components/common/Test';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import 'react-flexview/lib/flexView.css' // FlexView is useless without its style
@@ -25,6 +26,7 @@ render(
     <ConnectedRouter history={history}>
     	<div>
 			<Route exact path="/" component={App} />
+      <Route exact path="/test" component={Test} />
 			<Route exact path="/sign-in" component={SignIn} />
 			<Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/add-url" component={AddUrl} />
