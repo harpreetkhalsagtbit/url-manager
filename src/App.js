@@ -12,6 +12,7 @@ import { history } from './store'
 import Header from './components/common/Header/Header'
 import { Button } from 'semantic-ui-react'
 import ListItem from './components/common/ListItem/ListItem'
+import Modal from './components/common/Modal'
 import URLPreview from './components/common/URLPreview/URLPreview'
 import AddUrlShort from './components/url/AddUrlShort';
 import FlexView from 'react-flexview';
@@ -28,6 +29,7 @@ class App extends Component {
             urlMetadataPreview:{},
             urlForm: {},
             urlIdToEdit:"",
+            showModal:false,
             isRequested:this.props.isRequested || false
         };
         this.logoutHandler = this.logoutHandler.bind(this);
@@ -73,7 +75,8 @@ class App extends Component {
                 _this.props.urlMetadataPreviewAction.previewURL(_this.state.urlForm)
             } else {
                 _this.setState({
-                    urlMetadataPreview:{}
+                    urlMetadataPreview:{},
+                    showModal:false
                 })
             }
             // Typing finished, now you can Do whatever after 2 sec
@@ -103,9 +106,12 @@ class App extends Component {
             this.setState({urlMetadata:[]})
         }
 
-        if(nextProps.urlMetadataPreview) {
-            console.log("here")
-            this.setState({urlMetadataPreview:nextProps.urlMetadataPreview})
+        if(Object.keys(nextProps.urlMetadataPreview).length) {
+            console.log("here", nextProps.urlMetadataPreview)
+            this.setState({
+                urlMetadataPreview:nextProps.urlMetadataPreview,
+                showModal:true
+            })
         }
     }
 
@@ -164,7 +170,8 @@ class App extends Component {
             <div>
                 <Header logoutHandler={this.logoutHandler}></Header>
                 <AddUrlShort saveURLHandler={this.saveURLHandler} onChange={this.onChangeTextInput} onKeyUpAddShortUrlTextInput={this.onKeyUpAddShortUrlTextInput} urlShortForm={this.state.urlForm}/>
-                {show}
+                <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
+                <Modal isActive={this.state.showModal} url={this.state.urlMetadataPreview.url}/>
             </div>
         );
 

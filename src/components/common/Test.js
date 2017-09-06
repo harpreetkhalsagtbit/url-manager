@@ -1,25 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // ES6
 import {TextArea } from 'semantic-ui-react'
-import ContextMenu from './ContextMenu/ContextMenu'
-import './ContextMenu/ContextMenu.css';
+import Dropdown from './Dropdown/Dropdown'
+import './Dropdown/Dropdown.css';
 
 const Test = ({name}) => {
+	var arr = ["harpreet", "singh"]
 
 	return (
 		<div className="">
-			<ul className="tasks">
-				<li className="task" data-id="3">
-					<div className="task__content">
-						Go To Grocery
-					</div>
-					<div className="task__actions">
-						<i className="fa fa-eye"></i>
-						<i className="fa fa-edit"></i>
-						<i className="fa fa-times"></i>
-						</div>
-				</li>
-	    	</ul>
+			<Dropdown label="" options={arr}/>
+			<div className="modal">
+			  <div className="modal-background"></div>
+			  <div className="modal-content">
+			  	<h1>Hello</h1>
+			  </div>
+			  <button className="modal-close is-large" aria-label="close"></button>
+			</div>
 		</div>
 
 	);
