@@ -14,8 +14,6 @@ import App from './App';
 import Test from './components/common/Test';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
-import 'react-flexview/lib/flexView.css' // FlexView is useless without its style
-import 'bulma/css/bulma.css'
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 

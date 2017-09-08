@@ -1,41 +1,22 @@
-html, body {
-  height: 100%;
-}
-
-body {
-  background-color: #f9f9f9 !important;
-  margin: 0;
-}
-
-.addUrlParent {
-	display: flex;
-	justify-content: center;
-}
-
-
-.addUrlItem {
-	font-size: 24px;
-	width: 400px;
-}
-
-.addUrlItem input {
-	width: 100%;
-}
-
-.modal {
-    background-color: grey;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
 .container {
-	display: flex;
-	height: 100%;
-	justify-content: center;
-	flex-direction: column;
-	align-items: center;
+  margin:0px;
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  background-color: #fff;
 }
 
+::-webkit-input-placeholder { /* Chrome */
+  color: #fff;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+  opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: #fff;
+  opacity: 1;
+}

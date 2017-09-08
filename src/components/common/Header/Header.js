@@ -1,25 +1,28 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react'
-import FlexView from 'react-flexview';
 import './Header.css';
 
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
 const Header = ({options=[], onChange, placeHolder, logoutHandler}) => {
 	return (
-		<ul className="navigation">
-			<li><a href="#" onClick={logoutHandler}>Logout</a></li>
-		</ul>
+		<header className="shadow">
+			<nav>
+				<ul>
+					<li><h1>Keep It</h1></li>
+				</ul>
+			</nav>
+			<div>
+				<span><i className="fa fa-search" aria-hidden="true"></i></span>
+				<input type="text" placeholder="Search"/>
+				<span><i className="fa fa-times" aria-hidden="true"></i></span>
+			</div>
+			<button>Logout</button>
+		</header>
+
 	);
 };
-			// <FlexView style={{height: 50, backgroundColor: '#D1236D'}}>
-			//     <FlexView  hAlignContent='center' marginTop='5px' marginBottom='5px' marginLeft='auto'>
-			//         <Button primary onClick={logoutHandler}>
-			//             Logout
-			//         </Button>
-			//     </FlexView>
-			// </FlexView>
-			// <FlexView style={{height: 10}}>
-			// </FlexView>
+			// <ul className="navigation">
+			// 	<li><a href="#" onClick={logoutHandler}>Logout</a></li>
+			// </ul>
 
 export default Header;
 

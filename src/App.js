@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import { bindActionCreators } from 'redux'
 import * as authActionCreator from './actions/AuthAction';
 import * as urlMetadataActionCreator from './actions/UrlMetadataAction';
@@ -7,82 +7,44 @@ import * as urlMetadataPreviewActionCreator from './actions/UrlMetadataPreviewAc
 import {connect} from 'react-redux';
 
 import './App.css';
-import 'semantic-ui-css/semantic.min.css';
 import { history } from './store'
 import Header from './components/common/Header/Header'
-import { Button } from 'semantic-ui-react'
-import ListItem from './components/common/ListItem/ListItem'
-import Modal from './components/common/Modal'
-import URLPreview from './components/common/URLPreview/URLPreview'
-import AddUrlShort from './components/url/AddUrlShort';
-import FlexView from 'react-flexview';
-
-// import store from './store'
+import Aside from './components/common/Aside/Aside'
+import Main from './components/Main/Main'
 
 var _changeInterval = null;
 class App extends Component {
-    constructor(props) {
-        super(props)
+	constructor(props) {
+	    super(props)
+
         this.state = {
             auth:Object.assign({}, this.props.auth),
-            urlMetadata:[],
-            urlMetadataPreview:{},
-            urlForm: {},
-            urlIdToEdit:"",
-            showModal:false,
-            isRequested:this.props.isRequested || false
         };
-        this.logoutHandler = this.logoutHandler.bind(this);
-        this.onChangeTextInput = this.onChangeTextInput.bind(this);
-        this.saveURLHandler = this.saveURLHandler.bind(this);
-        this.editURLHandler = this.editURLHandler.bind(this);
-        this.deleteURLHandler = this.deleteURLHandler.bind(this);
-        this.showEditModalHandler = this.showEditModalHandler.bind(this);
-        this.showAddUrlPage = this.showAddUrlPage.bind(this);
-        this.onKeyUpAddShortUrlTextInput = this.onKeyUpAddShortUrlTextInput.bind(this);
-    }
-    componentDidMount() {
-        // this.props.authAction.checkAuthStatus()
-        // this.props.getAuth()
-        if(this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
-            this.setState({urlMetadata:this.props.urlMetadata})
-        } else if(this.props.auth.isLoggedIn && !this.state.isRequested) {
-            this.props.urlMetadataAction.loadURLsWithMeta()
-            this.setState({
-                isRequested:true,
-                isLoggedIn:this.props.auth.isLoggedIn
-            })
-        }
-    }
 
-    onChangeTextInput(event) {
-        const field = event.target.name;
-        let urlForm = this.state.urlForm;
-        urlForm[field] = event.target.value;
-        return this.setState({urlForm: urlForm});
-    }
+		this.logoutHandler = this.logoutHandler.bind(this);
+		this.onChangeTextInput = this.onChangeTextInput.bind(this);
+	}
 
+	componentDidMount() {
+	    // this.props.authAction.checkAuthStatus()
+	    // this.props.getAuth()
+	    if(this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
+	        this.setState({urlMetadata:this.props.urlMetadata})
+	    } else if(this.props.auth.isLoggedIn && !this.state.isRequested) {
+	        this.props.urlMetadataAction.loadURLsWithMeta()
+	        this.setState({
+	            isRequested:true,
+	            isLoggedIn:this.props.auth.isLoggedIn
+	        })
+	    }
+	}
 
-    onKeyUpAddShortUrlTextInput(event) {
-        let _this = this;
-        // wait untill user type in something
-        // Don't let call setInterval - clear it, user is still typing
-        clearInterval(_changeInterval)
-        _changeInterval = setInterval(function() {
-            var regExUrl = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
-            if(regExUrl.test(_this.state.urlForm.url)) {
-                console.log("ajax")
-                _this.props.urlMetadataPreviewAction.previewURL(_this.state.urlForm)
-            } else {
-                _this.setState({
-                    urlMetadataPreview:{},
-                    showModal:false
-                })
-            }
-            // Typing finished, now you can Do whatever after 2 sec
-            clearInterval(_changeInterval)
-        }, 1000);
-    }
+	onChangeTextInput(event) {
+	    const field = event.target.name;
+	    let urlForm = this.state.urlForm;
+	    urlForm[field] = event.target.value;
+	    return this.setState({urlForm: urlForm});
+	}
 
     componentWillReceiveProps(nextProps) {
         console.log("nextProps", nextProps)
@@ -105,101 +67,22 @@ class App extends Component {
         } else {
             this.setState({urlMetadata:[]})
         }
-
-        if(Object.keys(nextProps.urlMetadataPreview).length) {
-            console.log("here", nextProps.urlMetadataPreview)
-            this.setState({
-                urlMetadataPreview:nextProps.urlMetadataPreview,
-                showModal:true
-            })
-        }
     }
 
     logoutHandler () {
         this.props.authAction.logout()
     }
-    editURLHandler (id) {
-        console.log("editURLHandler", id)
-        this.setState({
-            urlIdToEdit:""
-        })
-        this.props.urlMetadataAction.editURL({
-            id:this.state.urlIdToEdit,
-            url:this.state.urlForm.url
-        })
-    }
-    saveURLHandler () {
-        this.props.urlMetadataAction.saveURL(this.state.urlForm)
-        this.setState({
-            urlForm:{
-                "url":""
-            }
-        })
-    }
-    deleteURLHandler (id) {
-        this.props.urlMetadataAction.removeURL(id)
-    }
-    showEditModalHandler (urlForm) {
-        this.setState({
-            urlIdToEdit:urlForm._id,
-            urlForm:{
-                "url":urlForm.metadata.url
-            }
-        })
-    }
-    showAddUrlPage() {
-        history.push('/add-url')
-    }
-    shouldComponentUpdate(nextProps, nextState) {
-        return true;
-    }
-    componentDidUpdate() {
-        console.log("didUpdate", this.props)
-    }
 
     render() {
-        // let urlPreview = "";
-        console.log("before  if", this.state.urlMetadataPreview)
-        if(Object.keys(this.state.urlMetadataPreview).length) {
-            console.log("if", urlPreview)
-        }
-        let urlPreview = <URLPreview urlMetadataPreview={this.state.urlMetadataPreview.url || {}}></URLPreview>
-        let listItem = <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
-        let show = !Object.keys(this.state.urlMetadataPreview).length?listItem:urlPreview
         return (
-            <div>
+            <div className="container">
                 <Header logoutHandler={this.logoutHandler}></Header>
-                <AddUrlShort saveURLHandler={this.saveURLHandler} onChange={this.onChangeTextInput} onKeyUpAddShortUrlTextInput={this.onKeyUpAddShortUrlTextInput} urlShortForm={this.state.urlForm}/>
-                <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
-                <Modal isActive={this.state.showModal} url={this.state.urlMetadataPreview.url}/>
+                <Aside></Aside>
+                <Main></Main>
             </div>
         );
-
-        // <div className="main">
-        //     <Header logoutHandler={this.logoutHandler}></Header>
-        //     <AddUrlShort saveURLHandler={this.saveURLHandler} onChange={this.onChangeTextInput} urlShortForm={this.state.urlForm}/>
-        //     <FlexView style={{backgroundColor: '#1A91EB'}}>
-        //         <FlexView hAlignContent='center' marginTop='15px' marginBottom='15px' marginLeft='auto' marginRight='auto'>
-        //             <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
-        //         </FlexView>
-        //     </FlexView>
-        // </div>
-
-
-
-
-                // <FlexView hAlignContent='right' marginBottom='15px' style={{backgroundColor: '#1A91EB'}}>
-                //     <FlexView marginBottom='15px' marginRight='15px'>
-                //         <Button negative circular icon='plus' onClick={this.showAddUrlPage}></Button>
-                //     </FlexView>
-                // </FlexView>
-                // <AddUrlModal saveURLHandler={this.saveURLHandler} urlForm={this.state.urlForm} onChange={this.onChangeTextInput}></AddUrlModal>
-            // <div className="App">
-            //     <main>
-            //     </main>
-            //     <ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditModalHandler} deleteURLHandler={this.deleteURLHandler}></ListItem>
-            // </div>
     }
+
 }
 
 var count = 0;
