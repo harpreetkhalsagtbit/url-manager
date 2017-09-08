@@ -78,7 +78,7 @@ class App extends Component {
             <div className="container">
                 <Header logoutHandler={this.logoutHandler}></Header>
                 <Aside></Aside>
-                <Main></Main>
+                <Main listdata={this.state.urlMetadata}></Main>
             </div>
         );
     }

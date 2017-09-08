@@ -27,21 +27,37 @@ const ListItemForURL = ({listdata = [], showEditModalHandler, deleteURLHandler, 
 	}
 
 	return (
-		<div className="page-content">  
+		<ul className="flex-container">
 			{listdata.map((url, index) => {
-			    return (
-			    	<div className="shadow">
-				    	<div className="imgContainer">
-				    		<img id={url._id + "_image"} src={url.metadata.image} />
-				    	</div>
-				    	<div className="descContainer">
-				    		<h1 className="titleCard"><a href={url.metadata.url} target="_blank">{url.metadata.title}</a></h1>
-				    		<p className="descCard">{url.metadata.description}</p>
-				    	</div>
-			    	</div>
-			    )
+			    return (<li key={url._id} id={url._id} className="flex-item shadow" onMouseEnter={_onMouseEnterHandler.bind(this, url._id)} onMouseLeave={_onMouseLeaveHandler.bind(this, url._id)}>
+					<div id={url._id + "_header"} className="cardToolsHeader hide">
+						<ui>
+							<li className="cardToolsItems"><span className="icon"><i className="fa fa-tag" aria-hidden="true"></i></span></li>
+							<li className="cardToolsItems"><span className="icon"><i className="fa fa-edit" aria-hidden="true"></i></span></li>
+						</ui>
+					</div>
+					<div className="imgContainer">
+						<img id={url._id + "_image"} src={url.metadata.image} />
+					</div>
+					<div className="descContainer">
+						<h1 className="titleCard"><a href={url.metadata.url} target="_blank">{url.metadata.title}</a></h1>
+						<div className="tagContainerCard">
+							<a href="#" className="tagsCard">JS</a>
+							<a href="#" className="tagsCard">React</a>
+							<a href="#" className="tagsCard">JS</a>
+							<a href="#" className="tagsCard">React</a>
+							<a href="#" className="tagsCard">JS</a>
+							<a href="#" className="tagsCard">React</a>
+							<a href="#" className="tagsCard">JS</a>
+							<a href="#" className="tagsCard">React</a>
+							<a href="#" className="tagsCard">JS</a>
+							<a href="#" className="tagsCard">React</a>
+						</div>
+						<p className="descCard">{url.metadata.description}</p>
+					</div>
+		    	</li>)
     		}, this)}
-		</div>
+		</ul>
 	);
 };
 		// <Item.Group link>

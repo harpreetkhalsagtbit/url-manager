@@ -1,4 +1,99 @@
 
+.page-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  justify-content: space-around;
+}
+
+.page-content div p {
+  width: 300px;
+}
+
+.page-content div h4 {
+  margin:0px;
+}
+
+.page-content div {
+	width: 400px;
+	padding: 0;
+	margin: 0;
+	background-color: #fff;
+	color: #000;
+	display: flex;
+	flex-direction:column;
+	justify-content: flex-start;
+}
+
+.page-content div{
+	margin-bottom: 20px;
+}
+.shadow {
+   -moz-box-shadow:     0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+   -webkit-box-shadow:  0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+   box-shadow:          0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+img {
+	opacity: 0.7;
+	max-width: 100%;
+	height: inherit;
+}
+
+.descContainer {
+	width: 400px;
+	background-color: white;
+}
+
+.imgContainer {
+	display: flex;
+	width: 400px;
+	height: 200px;
+	background-color: white;
+}
+
+.titleCard {
+	text-align: left;
+	color: #303030;
+	font-size: 24px;
+	font-weight: 300;
+	padding: 10px;
+	margin-bottom: 0px;
+}
+
+.descCard {
+	text-align: left;
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+	padding: 10px;
+}
+
+.tagContainerCard {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	align-items: stretch;
+}
+
+.tagsCard {
+	text-align: left;
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+	padding: 10px;
+	background-color: red;
+    border-radius: 15px;
+    margin: 5px;
+    line-height: 20px;
+}
+
+
+/*
 .flex-container {
 	padding: 0;
 	margin: 0;
@@ -63,7 +158,6 @@ img {
 	color: #303030;
 	font-size: 24px;
 	font-weight: 300;
-	/*text-overflow: ellipsis;*/
 	padding: 10px;
 	margin-bottom: 0px;
 }
@@ -73,7 +167,6 @@ img {
 	color: #303030;
 	font-size: 18px;
 	font-weight: 300;
-	/*text-overflow: ellipsis;*/
 	padding: 10px;
 }
 
@@ -86,7 +179,6 @@ img {
 	flex-flow: row wrap;
 	-webkit-flex-flow: row wrap;
 	align-items: stretch;
-	/*justify-content: space-around;*/
 }
 
 .tagsCard {
@@ -94,7 +186,6 @@ img {
 	color: #303030;
 	font-size: 18px;
 	font-weight: 300;
-	/*text-overflow: ellipsis;*/
 	padding: 10px;
 	background-color: red;
     border-radius: 15px;
@@ -106,7 +197,6 @@ img {
 	position: absolute;
 	background-color: red;
 	line-height: 30px;
-	/*flex-grow: 1;*/
 	width: 400px;
 	z-index: 100;
 }
@@ -133,4 +223,4 @@ img {
 
 .hide {
 	visibility: hidden;
-}
+}*/
