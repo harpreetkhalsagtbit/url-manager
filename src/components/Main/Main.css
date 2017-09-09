@@ -1,0 +1,13 @@
+
+.page {
+	left:20%;
+	padding-top:70px;
+	padding-left:2%;
+	margin-top: 10px;
+	position: absolute;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 80%;
+}

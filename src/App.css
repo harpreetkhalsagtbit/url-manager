@@ -1,24 +1,22 @@
-.App {
-  text-align: center;
+.container {
+  margin:0px;
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  background-color: #fff;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+::-webkit-input-placeholder { /* Chrome */
+  color: #fff;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
 }
-
-.App-intro {
-  font-size: large;
+::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+  opacity: 1;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: #fff;
+  opacity: 1;
 }

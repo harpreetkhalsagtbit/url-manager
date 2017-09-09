@@ -1,0 +1,21 @@
+
+aside {
+	top:70px;
+	position: fixed;
+	height: 100%;
+	width:20%;
+	margin:10px;
+	overflow: auto;
+	padding: 15px;
+	background-color:#2856b6;
+	border-radius: 4px;
+}
+
+aside ul {
+	list-style-type: none;
+	padding: 10px;
+}
+
+aside ul li {
+	padding: 10px;
+}

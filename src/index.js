@@ -10,6 +10,7 @@ import SignIn from './components/authentication/SignIn';
 import SignUp from './components/authentication/SignUp';
 import {checkAuthStatus} from './actions/AuthAction';
 import App from './App';
+import Test from './components/common/Test';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -23,6 +24,7 @@ render(
     <ConnectedRouter history={history}>
     	<div>
 			<Route exact path="/" component={App} />
+      <Route exact path="/test" component={Test} />
 			<Route exact path="/sign-in" component={SignIn} />
 			<Route exact path="/sign-up" component={SignUp} />
 		</div>

@@ -1,0 +1,217 @@
+
+.listContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  justify-content: space-around;
+}
+
+
+.listContainer div {
+	width: 400px;
+	padding: 0;
+	margin: 0;
+	margin-bottom: 15px;
+	background-color: #fff;
+	color: #000;
+	display: flex;
+	flex-direction:column;
+	justify-content: space-between;
+}
+
+.shadow {
+   -moz-box-shadow:     0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+   -webkit-box-shadow:  0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+   box-shadow:          0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+img {
+	opacity: 0.9;
+	max-width: 100%;
+	height: inherit;
+}
+
+.descContainer {
+	width: 400px;
+	background-color: white;
+}
+
+.imgContainer {
+	display: flex;
+	width: 400px;
+	height: 200px;
+	background-color: white;
+}
+
+.titleCard {
+	text-align: left;
+	color: #303030;
+	font-size: 24px;
+	font-weight: 300;
+	padding: 10px;
+	margin-bottom: 0px;
+}
+
+.descCard {
+	text-align: left;
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+	padding: 10px;
+}
+
+.tagContainerCard {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	align-items: stretch;
+}
+
+.tagsCard {
+	text-align: left;
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+	padding: 10px;
+	background-color: red;
+    border-radius: 15px;
+    margin: 5px;
+    line-height: 20px;
+}
+
+
+/*
+.flex-container {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	justify-content: space-around;
+}
+
+.flex-item {
+	background: white;
+	width: 400px;
+	min-height: 200px;
+	margin-top: 10px;
+	line-height: 150px;
+	color: white;
+	font-weight: bold;
+	font-size: 3em;
+}
+
+.shadow {
+   -moz-box-shadow:    rgba(0,0,0,.1) 0 2px 5px;
+   -webkit-box-shadow: rgba(0,0,0,.1) 0 2px 5px;
+   box-shadow:         rgba(0,0,0,.1) 0 2px 5px;
+}
+
+img {
+	opacity: 0.7;
+	max-width: 100%;
+}
+
+.focusImage {
+	opacity: 1
+}
+
+.focusCard {
+   -moz-box-shadow:    rgba(0,0,0,.3) 0 2px 5px;
+   -webkit-box-shadow: rgba(0,0,0,.3) 0 2px 5px;
+   box-shadow:         rgba(0,0,0,.3) 0 2px 5px;
+
+}
+.imgContainer {
+	display: flex;
+	width: 400px;
+	height: 200px;
+	background-color: white;
+}
+
+.descContainer {
+	width: 400px;
+	background-color: white;
+}
+
+
+.titleCard {
+	text-align: left;
+	color: #303030;
+	font-size: 24px;
+	font-weight: 300;
+	padding: 10px;
+	margin-bottom: 0px;
+}
+
+.descCard {
+	text-align: left;
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+	padding: 10px;
+}
+
+.tagContainerCard {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-flow: row wrap;
+	-webkit-flex-flow: row wrap;
+	align-items: stretch;
+}
+
+.tagsCard {
+	text-align: left;
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+	padding: 10px;
+	background-color: red;
+    border-radius: 15px;
+    margin: 5px;
+    line-height: 20px;
+}
+
+.cardToolsHeader {
+	position: absolute;
+	background-color: red;
+	line-height: 30px;
+	width: 400px;
+	z-index: 100;
+}
+
+.cardToolsHeader ui {
+	list-style: none;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	justify-content: flex-end;
+}
+
+.cardToolsItems {
+	font-size: 20px;
+	padding-right: 10px;	
+}
+
+.show {
+	visibility: visible;
+}
+
+.hide {
+	visibility: hidden;
+}*/
