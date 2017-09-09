@@ -8,6 +8,9 @@ const initialState = {
 export default function urlMetadataReducer(state = initialState.urlList, action) {
 	// console.log(action, types)
 	switch (action.type) {
+		case types.LOGOUT_SUCCESS:
+			return initialState.urlList;
+
 		case types.LOAD_URL_SUCCESS:
 			return action.urlList;
 
@@ -24,7 +27,7 @@ export default function urlMetadataReducer(state = initialState.urlList, action)
 
 		case types.UPDATE_URL_SUCCESS:
 			return [
-				...state.filter(url => url.id !== action.url.id),
+				...state.filter(url => url._id !== action.url._id),
 				Object.assign({}, action.url)
 			];
 

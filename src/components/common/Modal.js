@@ -1,35 +1,19 @@
 import React from 'react'
-import { Button, Header, Modal } from 'semantic-ui-react'
-import TextInput from '../common/TextInput';
+import URLPreview from './URLPreview/URLPreview'
 
-const ModalShorthandExample = ({open, urlIdToEdit, urlForm, editURLHandler, saveURLHandler, header, content, onChange, errors={}}) => {
+const Modal = ({isActive, closeHandler, url}) => {
 
-  return (
-    <Modal open={open}>
-      <Modal.Header>URL Manager</Modal.Header>
-      <Modal.Content>
-        <Modal.Description>
-          <Header>{header}</Header>
-          <p>This is an example of expanded content that will cause the modal's dimmer to scroll</p>
-        </Modal.Description>
-  		<TextInput
-  			name="url"
-  			label="Paste URL here"
-  			value={urlForm.url}
-  			onChange={onChange}
-  			error={errors.title}/>
-
-      </Modal.Content>
-      <Modal.Actions>
-        <Button>
-        	Cancel
-        </Button>
-        <Button onClick={urlIdToEdit?editURLHandler:saveURLHandler}>
-        	Save
-        </Button>
-      </Modal.Actions>
-    </Modal>
-    )
+	var showModal = isActive?"is-active":""
+	console.log("showModal", showModal, url)
+	return (
+		<div className= {"modal " + showModal}>
+		  <div className="modal-background"></div>
+		  <div className="modal-content">
+		  	<URLPreview urlMetadataPreview={url || {}}></URLPreview>
+		  </div>
+		  <button className="modal-close is-large" aria-label="close"></button>
+		</div>
+	)
 }
 
-export default ModalShorthandExample
+export default Modal

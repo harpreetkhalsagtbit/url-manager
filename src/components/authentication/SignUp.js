@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import * as authActions from '../../actions/AuthAction';
 import {connect} from 'react-redux';
-import LogInForm from './LogInForm';
+import SignUpForm from './LogInForm';
 import FlexView from 'react-flexview';
+
 
 class SignIn extends Component {
 
@@ -12,13 +13,13 @@ class SignIn extends Component {
         this.state = {
             check:"check",
             auth:Object.assign({}, this.props.auth),
-            logInDetails:{},
+            signUpDetails:{},
             errors:{}
         };
 
-        // console.log("constructor", this)
-        this.updateLogInFormState = this.updateLogInFormState.bind(this);
-        this.submitLogInForm = this.submitLogInForm.bind(this);
+        // console.log("cSignUpuctor", this)
+        this.updateSignUpFormState = this.updateSignUpFormState.bind(this);
+        this.submitSignUpForm = this.submitSignUpForm.bind(this);
     }
     componentWillMount() {
         // console.log("componentWillMount", this)
@@ -30,26 +31,22 @@ class SignIn extends Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("componentWillReceiveProps", nextProps)
-        if(nextProps.auth && nextProps.auth.isLoggedIn) {
-            this.setState({auth: Object.assign({}, nextProps.auth)});
-            // console.log("state set", {errors: Object.assign({}, nextProps.response)})
-            this.props.history.push("/")
-        } else if(nextProps.auth && !nextProps.auth.isLoggedIn) {
-            this.setState({errors: Object.assign({}, nextProps.auth.response)});
+        if(nextProps.auth && nextProps.auth.signUpStatus) {
+            nextProps.history.push("/sign-in")
         }
     }
 
-    updateLogInFormState(event) {
+    updateSignUpFormState(event) {
         const field = event.target.name;
-        let logInDetails = this.state.logInDetails;
-        logInDetails[field] = event.target.value;
-        return this.setState({logInDetails: logInDetails});
+        let signUpDetails = this.state.signUpDetails;
+        signUpDetails[field] = event.target.value;
+        return this.setState({signUpDetails: signUpDetails});
     }
 
-    submitLogInForm(event) {
+    submitSignUpForm(event) {
         event.preventDefault();
-        console.log(this.state.logInDetails)
-		this.props.action.verifyLogIn(this.state.logInDetails)
+        console.log(this.state.signUpDetails)
+		this.props.action.signUpSubmit(this.state.signUpDetails)
         // this.props.action.saveCourse(this.state.course);
         // this.context.router.push('/courses');
         // this.props.actions.saveCourse(this.state.course);
@@ -79,12 +76,12 @@ class SignIn extends Component {
         return (
             <FlexView column style={{ height: '100vh' }} hAlignContent='center' vAlignContent='center'>
                 <FlexView>
-                    <LogInForm
-                        onChange = {this.updateLogInFormState}
-                        onClick={this.submitLogInForm}
-                        formDetails={this.state.logInDetails}
+                    <SignUpForm
+                        onChange = {this.updateSignUpFormState}
+                        onClick={this.submitSignUpForm}
+                        formDetails={this.state.signUpDetails}
                         errors={this.state.errors}
-                        labelButton="Login"
+                        labelButton="Sign Up"
                     />
                     {showError}
                 </FlexView>
@@ -114,9 +111,9 @@ class SignIn extends Component {
 //     mapDispatchToProps
 // )(App)
 
-// var count = 0;
+var count = 0;
 function mapStateToProps(state, ownProps) {
-    // console.log(count++, "mapStateToProps", state)
+    console.log(count++, "mapStateToProps", state)
     // const courseId = ownProps.params.id; //from the path '/course/:id'
     // let course = {id:'', watchHref:'', title:'', authorId:'', length:'', category:''};
     // if(courseId && state.courses && state.courses.length) {

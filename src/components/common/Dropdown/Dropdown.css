@@ -1,0 +1,13 @@
+.contextMenuContainer {
+	position: absolute;
+}
+.contextMenu {
+	list-style: none;
+	background-color: red;
+	position: relative;
+	left: 100px;
+}
+
+.contextMenu li:hover {
+	background-color: pink;
+}

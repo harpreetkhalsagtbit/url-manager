@@ -18,6 +18,13 @@ export function authSuccess(status) {
     };
 }
 
+export function logoutSuccess() {
+    return {
+        type: types.LOGOUT_SUCCESS,
+        "isLoggedIn": false
+    };
+}
+
 export function signUpSuccess(status) {
     var isLoggedIn = status;
     return {
@@ -170,6 +177,28 @@ export const signUpSubmit = (signUpDetails) => {
                 if(response.data.logIn == "sign up success") {
                     return dispatch(signUpSuccess(true))
                 }
+            }
+        }).catch(error => {
+            if (error.errorCode === 400) {
+                return dispatch(authFailed(error))
+            }
+        });
+    };
+}
+
+function logoutMe(signUpDetails) {
+    return new Promise((resolve, reject) => {
+        localStorage.setItem("token","")
+        resolve(true)
+    });
+
+}
+
+export const logout = () => {
+    return dispatch => {
+        return logoutMe().then(logout => {
+            if (logout) {
+                return dispatch(logoutSuccess())
             }
         }).catch(error => {
             if (error.errorCode === 400) {
