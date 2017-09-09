@@ -8,7 +8,6 @@ import store, { history } from './store'
 import { Route } from 'react-router-dom';
 import SignIn from './components/authentication/SignIn';
 import SignUp from './components/authentication/SignUp';
-import AddUrl from './components/url/AddUrl';
 import {checkAuthStatus} from './actions/AuthAction';
 import App from './App';
 import Test from './components/common/Test';
@@ -28,7 +27,6 @@ render(
       <Route exact path="/test" component={Test} />
 			<Route exact path="/sign-in" component={SignIn} />
 			<Route exact path="/sign-up" component={SignUp} />
-      <Route exact path="/add-url" component={AddUrl} />
 		</div>
     </ConnectedRouter>
   </Provider>,
