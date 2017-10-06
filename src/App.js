@@ -19,26 +19,30 @@ class App extends Component {
 
         this.state = {
             auth:Object.assign({}, this.props.auth),
+            isPreviewUrlModalHidden:false
         };
 
 		this.logoutHandler = this.logoutHandler.bind(this);
 		this.onChangeTextInput = this.onChangeTextInput.bind(this);
+		this.onKeyUpAddShortUrlTextInput = this.onKeyUpAddShortUrlTextInput.bind(this);
+        this.onChangeTextInput = this.onChangeTextInput.bind(this);
 	}
 
 	componentDidMount() {
-	    // this.props.authAction.checkAuthStatus()
-	    // this.props.getAuth()
-	    if(this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
-	        this.setState({urlMetadata:this.props.urlMetadata})
-	    } else if(this.props.auth.isLoggedIn && !this.state.isRequested) {
-	        this.props.urlMetadataAction.loadURLsWithMeta()
-	        this.setState({
-	            isRequested:true,
-	            isLoggedIn:this.props.auth.isLoggedIn
-	        })
-	    }
+		// this.props.authAction.checkAuthStatus()
+		// this.props.getAuth()
+		if (this.props.auth && this.props.auth.isLoggedIn && this.props.urlMetadata.length) {
+			this.setState({
+				urlMetadata: this.props.urlMetadata
+			})
+		} else if (this.props.auth.isLoggedIn && !this.state.isRequested) {
+			this.props.urlMetadataAction.loadURLsWithMeta()
+			this.setState({
+				isRequested: true,
+				isLoggedIn: this.props.auth.isLoggedIn
+			})
+		}
 	}
-
 	onChangeTextInput(event) {
 	    const field = event.target.name;
 	    let urlForm = this.state.urlForm;
@@ -47,11 +51,8 @@ class App extends Component {
 	}
 
     componentWillReceiveProps(nextProps) {
-        console.log("nextProps", nextProps)
         if(nextProps.auth && !nextProps.auth.isLoggedIn && nextProps.history) {
             nextProps.history.push("/sign-in")
-        } else if(nextProps.auth && nextProps.auth.isLoggedIn && nextProps.urlMetadata.length) {
-            this.setState({urlMetadata:nextProps.urlMetadata})
         } else if(nextProps.auth && nextProps.auth.isLoggedIn && !this.state.isRequested){
             // this should have done with props
             // :(
@@ -64,8 +65,26 @@ class App extends Component {
                 isRequested:true,
                 isLoggedIn:nextProps.auth.isLoggedIn
             })
+        } else if(nextProps.auth && nextProps.auth.isLoggedIn) {
+        	if(nextProps.urlMetadata.length) {
+	            this.setState({
+	            	urlMetadata:nextProps.urlMetadata,
+	            })
+        	}
+        	if(Object.keys(nextProps.urlMetadataPreview).length) {
+	            this.setState({
+	            	urlMetadataPreview:nextProps.urlMetadataPreview,
+	            	isPreviewUrlModalHidden:false
+	            })
+        	} else {
+	            this.setState({
+	            	isPreviewUrlModalHidden:false
+	            })
+        	}
         } else {
-            this.setState({urlMetadata:[]})
+            this.setState({
+            	urlMetadata:[]
+            })
         }
     }
 
@@ -78,7 +97,7 @@ class App extends Component {
             <div className="container">
                 <Header logoutHandler={this.logoutHandler}></Header>
                 <Aside></Aside>
-                <Main listdata={this.state.urlMetadata}></Main>
+                <Main></Main>
             </div>
         );
     }
