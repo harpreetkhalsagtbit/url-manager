@@ -24,8 +24,6 @@ class App extends Component {
 
 		this.logoutHandler = this.logoutHandler.bind(this);
 		this.onChangeTextInput = this.onChangeTextInput.bind(this);
-		this.onKeyUpAddShortUrlTextInput = this.onKeyUpAddShortUrlTextInput.bind(this);
-        this.onChangeTextInput = this.onChangeTextInput.bind(this);
 	}
 
 	componentDidMount() {
