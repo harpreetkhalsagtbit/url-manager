@@ -3,12 +3,13 @@ import TextInput from '../../common/TextInput';
 import PropTypes from 'prop-types'; // ES6
 import './Add.css';
 
-const AddUrl = ({urlShortForm, saveURLHandler, onChange, loading, onKeyUpAddShortUrlTextInput, errors={}}) => {
+
+const AddUrl = ({name, value, urlShortForm, saveURLHandler, onKeyUpAddShortUrlTextInput, onChangeTextInput, loading, errors={}}) => {
 	return (
 		<div className="addUrlContainer">
 			<div className="addUrlChildWrapper shadow">
 				<span></span>
-				<input type="text" placeholder="Add Url"/>
+				<input name={name} type="text" placeholder="Add Url" value={value} onKeyUp={onKeyUpAddShortUrlTextInput} onChange={onChangeTextInput}/>
 				<span><i className="fa fa-times" aria-hidden="true"></i></span>
 			</div>
 		</div>
