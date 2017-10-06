@@ -1,0 +1,27 @@
+.addUrlPreviewModalPreviewModalContainer {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width:100%;
+	background-color: rgba(128, 128, 128, 0.70);
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.addUrlPreviewModalPreviewModalChildWrapper {
+	width: 400px;
+	background-color: #fff;
+}
+
+.addUrlPreviewSave button{
+	border: none;
+	padding: 8px 25px;
+	color: #fff;
+	font-size:16px;
+	font-weight: 600;
+	cursor: pointer;
+	background-color:#2856b6;
+}
