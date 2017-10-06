@@ -11,39 +11,29 @@ const ListItemForURL = ({listdata = [], showEditModalHandler, deleteURLHandler, 
 	}
 
 	let _showEditModalHandler = function(url) {
+		console.log(url)
 		showEditModalHandler(url)
-	}
-
-	let _onMouseEnterHandler = function(id, misc, event) {
-		$("#" + id + "_image").addClass("focusImage")
-		$("#" + id).addClass("focusCard")
-		$("#" + id + "_header").removeClass("hide")
-	}
-
-	let _onMouseLeaveHandler = function(id, misc, event) {
-		$("#" + id + "_image").removeClass("focusImage")
-		$("#" + id).removeClass("focusCard")
-		$("#" + id + "_header").addClass("hide")
 	}
 
 	return (
 		<div className="listContainer">  
 			{listdata.map((url, index) => {
 			    return (
-			    	<div className="listItem shadow">
-				    	<div>
-					    	<div className="imgContainer">
-					    		<img id={url._id + "_image"} src={url.metadata.image} />
-					    	</div>
-					    	<div className="descContainer">
-					    		<h1 className="titleCard"><a href={url.metadata.url} target="_blank">{url.metadata.title}</a></h1>
-					    		<p className="descCard">{url.metadata.description}</p>
-					    	</div>
-				    	</div>
-				    	<div>
-				    		<h1>hello</h1>
-				    	</div>
-			    	</div>
+					<div key={index} className="listItem shadow">
+						<div className="listItemBody">
+							<div className="imgContainer">
+								<img id={url._id + "_image"} src={url.metadata.image} />
+							</div>
+							<div className="descContainer">
+								<h1 className="titleCard"><a href={url.metadata.url} target="_blank">{url.metadata.title}</a></h1>
+								<p className="descCard">{url.metadata.description}</p>
+							</div>
+						</div>
+						<div className="listItemFooter">
+							<button>Delete</button>
+							<button onClick={_showEditModalHandler.bind(this, url)}>Edit</button>
+						</div>
+					</div>
 			    )
     		}, this)}
 		</div>
