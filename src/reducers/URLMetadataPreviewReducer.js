@@ -11,6 +11,9 @@ export default function urlMetadataReducer(state = initialState.urlMetadataPrevi
 		case types.PREVIEW_URL_SUCCESS:
 			return Object.assign({}, action.url)
 
+		case types.PREVIEW_URL_HIDE:
+			return Object.assign({}, action.url)
+
 		default:
 			return state;
 	}

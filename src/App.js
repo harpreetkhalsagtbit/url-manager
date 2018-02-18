@@ -66,6 +66,7 @@ class App extends Component {
         } else if(nextProps.auth && nextProps.auth.isLoggedIn) {
         	if(nextProps.urlMetadata.length) {
 	            this.setState({
+                    urlMetadataPreview:{},
 	            	urlMetadata:nextProps.urlMetadata,
 	            })
         	}

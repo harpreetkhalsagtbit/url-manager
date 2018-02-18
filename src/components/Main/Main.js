@@ -49,7 +49,6 @@ class Main extends Component {
 			})
 		}
 		if (Object.keys(nextProps.urlMetadataPreview).length) {
-			console.log("here............", Object.keys(nextProps.urlMetadataPreview).length, nextProps.urlMetadataPreview)
 			this.setState({
 				urlMetadataPreview: nextProps.urlMetadataPreview,
 				isPreviewUrlModalHidden: false
@@ -83,8 +82,7 @@ class Main extends Component {
 	onKeyUpAddShortUrlTextInput(event) {
 		let _this = this;
 		count++
-	    console.log("onKeyUpAddShortUrlTextInput", _this.state.urlForm)
-	    console.log("count", count)
+
 		// wait untill user type in something
 		// Don't let call setInterval - clear it, user is still typing
 		clearInterval(_changeInterval);
@@ -102,11 +100,13 @@ class Main extends Component {
 	}
 
 	saveURLHandler() {
+		this.props.urlMetadataAction.saveURL(this.state.urlForm)
+		this.props.urlMetadataPreviewAction.previewURLHide()
+
 		this.setState({
 			isPreviewUrlModalHidden: true,
 		    urlMetadataPreview:{}
 		})
-		this.props.urlMetadataAction.saveURL(this.state.urlForm)
 	}
 
 	removeURLHandler(id) {
@@ -114,7 +114,6 @@ class Main extends Component {
 	}
 
 	showEditUrlModal(metadataOfUrlToEdit) {
-		console.log("metadataOfUrlToEdit", metadataOfUrlToEdit)
 		this.setState({
 			isEditUrlModalHidden: false,
 			metadataOfUrlToEdit:metadataOfUrlToEdit
@@ -122,8 +121,7 @@ class Main extends Component {
 	}
 
 	render () {
-		console.log("isPreviewUrlModalHidden", this.state, this.state.isPreviewUrlModalHidden)
-		let _addUrlPreview=""
+		let _addUrlPreview="";
 
 		return (
 			<div className="page">
@@ -138,7 +136,7 @@ class Main extends Component {
 };
 var count = 0;
 function mapStateToProps(state, ownProps) {
-    console.log(count++, "mapStateToProps", state)
+    console.log(count++, "mapStateToProps main", state)
     return {
         auth:state.auth,
         urlMetadata:state.urlMetadata,

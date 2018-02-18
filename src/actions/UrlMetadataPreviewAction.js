@@ -7,6 +7,10 @@ export function previewUrlSuccess(url) {
     return { type: types.PREVIEW_URL_SUCCESS, url};
 }
 
+export function previewUrlHide() {
+    return { type: types.PREVIEW_URL_HIDE};
+}
+
 function previewMetaDataURL(urlForm) {
     return new Promise((resolve, reject) => {
         var token = localStorage.getItem("token")
@@ -58,6 +62,14 @@ export const previewURL = (id) => {
         }).catch(error => {
             return "dispatch(authFailed({}))"
         });
+    };
+
+}
+
+export const previewURLHide = (id) => {
+    return dispatch => {
+        console.log(id)
+        return dispatch(previewUrlHide())
     };
 
 }
