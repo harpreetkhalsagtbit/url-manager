@@ -150,8 +150,7 @@ function updateURL(urlForm) {
                     // "cache-control": "no-cache",
                 },
                 "data": {
-                    "id": urlForm.id,
-                    "url": urlForm.url
+                    "url": urlForm
                 },
                 success: function(data, status, response) {
                     console.log(response)

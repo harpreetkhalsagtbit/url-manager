@@ -3,7 +3,7 @@ import TextInput from '../../common/TextInput';
 import PropTypes from 'prop-types'; // ES6
 import './EditUrlModal.css';
 
-const EditUrlModal = ({urlMetadata, hide,  loading, saveURLHandler, onClickModalWrapper, errors={}}) => {
+const EditUrlModal = ({urlMetadata, hide,  loading, updateURLHandler, onChangeTextInput, onClickModalWrapper, errors={}}) => {
 
 	const hideModalHandler = function(event) {
 		onClickModalWrapper(event);
@@ -27,12 +27,12 @@ const EditUrlModal = ({urlMetadata, hide,  loading, saveURLHandler, onClickModal
 							</div>
 							<div className="descContainer">
 								<h1 className="titleCard"><a href={url.metadata && url.metadata.url} target="_blank">{url.metadata && url.metadata.title}</a></h1>
-								<p contentEditable={true} className="descCard">{url.metadata && url.metadata.description}</p>
+								<p contentEditable={true} onChange={onChangeTextInput} className="descCard">{url.metadata && url.metadata.description}</p>
 							</div>
 						</div>
 						<div className="">
 							<div className="editUrlSave">
-								<button onClick={saveURLHandler}>Done</button>
+								<button onClick={updateURLHandler}>Done</button>
 							</div>
 						</div>
 					</div>

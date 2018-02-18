@@ -37,6 +37,7 @@ class Main extends Component {
 		this.onClickModalWrapper = this.onClickModalWrapper.bind(this);
 		this.saveURLHandler = this.saveURLHandler.bind(this);
 		this.removeURLHandler = this.removeURLHandler.bind(this);
+		this.updateURLHandler = this.updateURLHandler.bind(this);
 
 		this.showEditUrlModal = this.showEditUrlModal.bind(this);
 	}
@@ -61,6 +62,7 @@ class Main extends Component {
 	}
 
 	onChangeTextInput(event) {
+		console.log("working")
 	    const field = event.target.name;
 	    let urlForm = this.state.urlForm;
 	    urlForm[field] = event.target.value;
@@ -109,6 +111,17 @@ class Main extends Component {
 		})
 	}
 
+	updateURLHandler() {
+		console.log(this.state)
+		this.props.urlMetadataAction.editURL(this.state.metadataOfUrlToEdit)
+		this.props.urlMetadataPreviewAction.previewURLHide()
+
+		this.setState({
+			isPreviewUrlModalHidden: true,
+		    urlMetadataPreview:{}
+		})
+	}
+
 	removeURLHandler(id) {
 		this.props.urlMetadataAction.removeURL(id)
 	}
@@ -128,7 +141,7 @@ class Main extends Component {
 				<AddUrl name="url" value={this.state.urlForm.url} onChangeTextInput={this.onChangeTextInput} onKeyUpAddShortUrlTextInput={this.onKeyUpAddShortUrlTextInput}></AddUrl>
 				<ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditUrlModal} deleteURLHandler={this.removeURLHandler}></ListItem>
 				<AddUrlPreview hide={this.state.isPreviewUrlModalHidden} onClickModalWrapper={this.onClickModalWrapper} urlMetadataPreview={this.state.urlMetadataPreview} saveURLHandler={this.saveURLHandler}></AddUrlPreview>
-				<EditUrlModal hide={this.state.isEditUrlModalHidden} onClickModalWrapper={this.onClickModalWrapper} urlMetadata={this.state.metadataOfUrlToEdit} saveURLHandler={this.saveURLHandler}></EditUrlModal>
+				<EditUrlModal hide={this.state.isEditUrlModalHidden} onChangeTextInput={this.onChangeTextInput} onClickModalWrapper={this.onClickModalWrapper} urlMetadata={this.state.metadataOfUrlToEdit} updateURLHandler={this.updateURLHandler}></EditUrlModal>
 			</div>
 			
 		);
