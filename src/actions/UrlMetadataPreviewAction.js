@@ -3,6 +3,7 @@ import * as types from './actionTypes';
 import $ from 'jquery';
 
 export function previewUrlSuccess(url) {
+    console.log("url", url)
     return { type: types.PREVIEW_URL_SUCCESS, url};
 }
 

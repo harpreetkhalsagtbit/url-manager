@@ -6,10 +6,10 @@ import './AddUrlPreviewModal.css';
 const AddUrlPreviewModal = ({urlMetadataPreview, hide,  loading, saveURLHandler, onKeyUpAddShortUrlTextInput, onClickModalWrapper, errors={}}) => {
 
 	const hideModalHandler = function(event) {
-		onClickModalWrapper();
+		onClickModalWrapper(event);
 	}
 	var url = Object.keys(urlMetadataPreview).length?urlMetadataPreview.url:{"metadata":{}}
-
+	console.log("url, ......", url)
 	if(hide) {
 		return (<div></div>)
 	} else {

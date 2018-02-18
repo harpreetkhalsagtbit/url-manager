@@ -6,8 +6,8 @@ import $ from 'jquery';
 
 const ListItemForURL = ({listdata = [], showEditModalHandler, deleteURLHandler, label, onChange, placeHolder, value, error}) => {
 	let wrapperClass = 'form-group';
-	let _deleteURLHandler = function(id) {
-		deleteURLHandler(id)
+	let _deleteURLHandler = function(url) {
+		deleteURLHandler(url._id)
 	}
 
 	let _showEditModalHandler = function(url) {
@@ -30,7 +30,7 @@ const ListItemForURL = ({listdata = [], showEditModalHandler, deleteURLHandler, 
 							</div>
 						</div>
 						<div className="listItemFooter">
-							<button>Delete</button>
+							<button onClick={_deleteURLHandler.bind(this, url)}>Delete</button>
 							<button onClick={_showEditModalHandler.bind(this, url)}>Edit</button>
 						</div>
 					</div>

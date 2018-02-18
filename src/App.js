@@ -69,16 +69,6 @@ class App extends Component {
 	            	urlMetadata:nextProps.urlMetadata,
 	            })
         	}
-        	if(Object.keys(nextProps.urlMetadataPreview).length) {
-	            this.setState({
-	            	urlMetadataPreview:nextProps.urlMetadataPreview,
-	            	isPreviewUrlModalHidden:false
-	            })
-        	} else {
-	            this.setState({
-	            	isPreviewUrlModalHidden:false
-	            })
-        	}
         } else {
             this.setState({
             	urlMetadata:[]

@@ -36,17 +36,20 @@ class Main extends Component {
 		this.onChangeTextInput = this.onChangeTextInput.bind(this);
 		this.onClickModalWrapper = this.onClickModalWrapper.bind(this);
 		this.saveURLHandler = this.saveURLHandler.bind(this);
+		this.removeURLHandler = this.removeURLHandler.bind(this);
+
 		this.showEditUrlModal = this.showEditUrlModal.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		console.log("nextProps", nextProps)
-		if (nextProps.urlMetadata.length) {
+		if (nextProps.urlMetadata) {
 			this.setState({
 				urlMetadata: nextProps.urlMetadata,
 			})
 		}
 		if (Object.keys(nextProps.urlMetadataPreview).length) {
+			console.log("here............", Object.keys(nextProps.urlMetadataPreview).length, nextProps.urlMetadataPreview)
 			this.setState({
 				urlMetadataPreview: nextProps.urlMetadataPreview,
 				isPreviewUrlModalHidden: false
@@ -66,7 +69,6 @@ class Main extends Component {
 	}
 
 	onClickModalWrapper(event) {
-		console.log(this.state)
 		event.stopPropagation();
 		let urlForm = this.state.urlForm;
 		urlForm["url"] = "";
@@ -100,14 +102,15 @@ class Main extends Component {
 	}
 
 	saveURLHandler() {
-		this.props.urlMetadataAction.saveURL(this.state.urlForm)
-		let urlForm = this.state.urlForm;
-		urlForm["url"] = "";
 		this.setState({
 			isPreviewUrlModalHidden: true,
-			urlMetadataPreview: {},
-			urlForm: urlForm
+		    urlMetadataPreview:{}
 		})
+		this.props.urlMetadataAction.saveURL(this.state.urlForm)
+	}
+
+	removeURLHandler(id) {
+		this.props.urlMetadataAction.removeURL(id)
 	}
 
 	showEditUrlModal(metadataOfUrlToEdit) {
@@ -119,13 +122,13 @@ class Main extends Component {
 	}
 
 	render () {
-		console.log("isPreviewUrlModalHidden", this.state.isPreviewUrlModalHidden)
+		console.log("isPreviewUrlModalHidden", this.state, this.state.isPreviewUrlModalHidden)
 		let _addUrlPreview=""
 
 		return (
 			<div className="page">
 				<AddUrl name="url" value={this.state.urlForm.url} onChangeTextInput={this.onChangeTextInput} onKeyUpAddShortUrlTextInput={this.onKeyUpAddShortUrlTextInput}></AddUrl>
-				<ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditUrlModal}></ListItem>
+				<ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditUrlModal} deleteURLHandler={this.removeURLHandler}></ListItem>
 				<AddUrlPreview hide={this.state.isPreviewUrlModalHidden} onClickModalWrapper={this.onClickModalWrapper} urlMetadataPreview={this.state.urlMetadataPreview} saveURLHandler={this.saveURLHandler}></AddUrlPreview>
 				<EditUrlModal hide={this.state.isEditUrlModalHidden} onClickModalWrapper={this.onClickModalWrapper} urlMetadata={this.state.metadataOfUrlToEdit} saveURLHandler={this.saveURLHandler}></EditUrlModal>
 			</div>
