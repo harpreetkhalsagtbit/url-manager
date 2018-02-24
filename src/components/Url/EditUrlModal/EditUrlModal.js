@@ -1,5 +1,6 @@
 import React from 'react';
 import TextInput from '../../common/TextInput';
+import TextArea from '../../common/TextArea';
 import PropTypes from 'prop-types'; // ES6
 import './EditUrlModal.css';
 
@@ -8,12 +9,25 @@ const EditUrlModal = ({urlMetadata, hide,  loading, updateURLHandler, onChangeTe
 	const hideModalHandler = function(event) {
 		onClickModalWrapper(event);
 	}
+
+	const onChangeDescription = function(proxy, event) {
+		console.log(event, arguments, this)
+		// event is undefined - using hardcoded desc name
+		onChangeTextInput({
+			target: {
+				name:"description",
+				value:event.value
+			}
+		})
+	}
+
 	var url = Object.keys(urlMetadata).length?urlMetadata:{"metadata":{}}
 
 	const childClickhandler = function(event) {
 		event.stopPropagation();
 	}
 
+	// _showEditModalHandler.bind(this, url)
 	if(hide) {
 		return (<div></div>)
 	} else {
@@ -27,7 +41,7 @@ const EditUrlModal = ({urlMetadata, hide,  loading, updateURLHandler, onChangeTe
 							</div>
 							<div className="descContainer">
 								<h1 className="titleCard"><a href={url.metadata && url.metadata.url} target="_blank">{url.metadata && url.metadata.title}</a></h1>
-								<p contentEditable={true} onChange={onChangeTextInput} className="descCard">{url.metadata && url.metadata.description}</p>
+								<TextArea name="description" rows="5" onChange={onChangeDescription} value={url.metadata && url.metadata.description} className="descCard"></TextArea>
 							</div>
 						</div>
 						<div className="">
@@ -42,6 +56,8 @@ const EditUrlModal = ({urlMetadata, hide,  loading, updateURLHandler, onChangeTe
 
 	}
 };
+
+			// <p contentEditable={true} onChange={onChangeTextInput} className="descCard">{url.metadata && url.metadata.description}</p>
 			// <input
 			// 	name="url" 
 			// 	placeholder="Paste URL..."

@@ -33,7 +33,8 @@ class Main extends Component {
 
 		this.onChangeTextInput = this.onChangeTextInput.bind(this);
 		this.onKeyUpAddShortUrlTextInput = this.onKeyUpAddShortUrlTextInput.bind(this);
-		this.onChangeTextInput = this.onChangeTextInput.bind(this);
+		this.onChangeTextInputForEdit = this.onChangeTextInputForEdit.bind(this);
+		
 		this.onClickModalWrapper = this.onClickModalWrapper.bind(this);
 		this.saveURLHandler = this.saveURLHandler.bind(this);
 		this.removeURLHandler = this.removeURLHandler.bind(this);
@@ -67,6 +68,15 @@ class Main extends Component {
 	    let urlForm = this.state.urlForm;
 	    urlForm[field] = event.target.value;
 	    return this.setState({urlForm: urlForm});
+	}
+
+	onChangeTextInputForEdit(event) {
+		console.log("working", event.target.name)
+		const field = event.target.name;
+		console.log(this.state)
+	    let metadataOfUrlToEdit = this.state.metadataOfUrlToEdit;
+	    metadataOfUrlToEdit["metadata"][field] = event.target.value || "";
+	    return this.setState({metadataOfUrlToEdit: metadataOfUrlToEdit});
 	}
 
 	onClickModalWrapper(event) {
@@ -141,7 +151,7 @@ class Main extends Component {
 				<AddUrl name="url" value={this.state.urlForm.url} onChangeTextInput={this.onChangeTextInput} onKeyUpAddShortUrlTextInput={this.onKeyUpAddShortUrlTextInput}></AddUrl>
 				<ListItem listdata={this.state.urlMetadata} showEditModalHandler={this.showEditUrlModal} deleteURLHandler={this.removeURLHandler}></ListItem>
 				<AddUrlPreview hide={this.state.isPreviewUrlModalHidden} onClickModalWrapper={this.onClickModalWrapper} urlMetadataPreview={this.state.urlMetadataPreview} saveURLHandler={this.saveURLHandler}></AddUrlPreview>
-				<EditUrlModal hide={this.state.isEditUrlModalHidden} onChangeTextInput={this.onChangeTextInput} onClickModalWrapper={this.onClickModalWrapper} urlMetadata={this.state.metadataOfUrlToEdit} updateURLHandler={this.updateURLHandler}></EditUrlModal>
+				<EditUrlModal hide={this.state.isEditUrlModalHidden} onChangeTextInput={this.onChangeTextInputForEdit} onClickModalWrapper={this.onClickModalWrapper} urlMetadata={this.state.metadataOfUrlToEdit} updateURLHandler={this.updateURLHandler}></EditUrlModal>
 			</div>
 			
 		);

@@ -18,8 +18,9 @@ const TextAreaInput = ({name, label, onChange, rows, placeHolder, value="", erro
 					rows={rows}
 					className="form-control"
 					placeholder={placeHolder}
-					value={value}
-					onChange={onChange}/>
+					onChange={onChange}>
+					{value}
+				</TextArea>
 			</div>
 		</div>
 
@@ -28,7 +29,6 @@ const TextAreaInput = ({name, label, onChange, rows, placeHolder, value="", erro
 
 TextAreaInput.propTypes = {
     name: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
     onChange: PropTypes.func,
     placeHolder: PropTypes.string,
     value: PropTypes.string,
