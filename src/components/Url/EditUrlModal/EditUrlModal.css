@@ -25,3 +25,9 @@
 	cursor: pointer;
 	background-color:#2856b6;
 }
+
+.editUrlModalContainer {
+	color: #303030;
+	font-size: 18px;
+	font-weight: 300;
+}
