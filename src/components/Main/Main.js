@@ -128,7 +128,8 @@ class Main extends Component {
 
 		this.setState({
 			isPreviewUrlModalHidden: true,
-		    urlMetadataPreview:{}
+			urlMetadataPreview:{},
+			isEditUrlModalHidden:true
 		})
 	}
 
